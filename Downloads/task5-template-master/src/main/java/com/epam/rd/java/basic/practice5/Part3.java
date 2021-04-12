@@ -21,5 +21,4 @@ public class Part3 {
     Part3(int counter, int counter2) {
 
     }
-
 }

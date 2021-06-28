@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+
+<meta charset="utf-8">
+<head>
+  <title>Admin: Main page/></title>
+</head>
+
+<body>
+<div id="home"></div>
+<div class="ournet-inter-area">
+  <header id="header" class="header-area">
+    <div class="logoBlock">
+      <div style="font-size: 16px; text-align: end;">
+        <a class="btn" href="${pageContext.request.contextPath}/view/language/admin/adminPage?language=RU">RU</a>
+        <a class="btn" href="${pageContext.request.contextPath}/view/language/admin/adminPage?language=EN">EN</a>
+      </div>
+      <p id="pageLogo">ISPAdmin</p>
+      <div class="adminmenu">
+        <ul>
+          <li><a class="scroll-animite btn"
+                 href="${pageContext.request.contextPath}/view/admin/listBook">books</a>
+          </li>
+          <li><a class="scroll-animite btn"
+                 href="${pageContext.request.contextPath}/view/admin/listPerson">users</a></li>
+          <li><a class="scroll-animite btn"
+                 href="${pageContext.request.contextPath}/view/admin/orderPage">orders</a></li>
+          <li><a class="scroll-animite logOutBtn"
+                 href="/logout">logout</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="time"><span id="datetime"></span></div>
+    <script src="${pageContext.request.contextPath}/styles/js/time.js"></script>
+
+  </header>
+  <!-- Slider area Start -->
+  <div class="slider-area">
+    <div class="slider-bg text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="slidertext">
+              <h1>mainPage</h1>
+            </div>
+          </div>
+          <div class="userInfo">
+            <h4>countUser"/>: ${people}</h4>
+            <h4>countActive"/>: ${active}</h4>
+            <h4>countBlocked"/> : ${blocked}</h4>
+            <h4>countBooks"/> : ${books}</h4>
+            <h4>countBooksBusy"/> : ${booksBusy}</h4>
+            <h4>countOrder"/> : ${order}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
+

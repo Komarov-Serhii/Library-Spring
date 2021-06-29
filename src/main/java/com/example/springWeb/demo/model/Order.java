@@ -1,13 +1,11 @@
 package com.example.springWeb.demo.model;
 
-import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-
 public class Order {
 
     @Id
@@ -16,7 +14,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "person_id")
-    private Person person;
+    private User user;
 
     @OneToOne
     @JoinColumn(name = "book_id")

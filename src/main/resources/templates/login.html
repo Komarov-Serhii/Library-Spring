@@ -1,6 +1,9 @@
+
 <!DOCTYPE html>
+
 <html xmlns:th="http://www.thymeleaf.org"
 lang="en">
+
 
 <meta charset="utf-8">
 <head>
@@ -2011,6 +2014,9 @@ lang="en">
     }
 </style>
 <body>
+<sec:authorize access="isAuthenticated()">
+    <% response.sendRedirect("/"); %>
+</sec:authorize>
 
 <div class="slider-area ">
     <div class="slider-bgLogin text-center">

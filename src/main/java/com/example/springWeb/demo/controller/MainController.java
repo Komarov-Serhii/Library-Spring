@@ -3,12 +3,16 @@ package com.example.springWeb.demo.controller;
 
 import com.example.springWeb.demo.dto.*;
 
+import com.example.springWeb.demo.model.User;
 import com.example.springWeb.demo.service.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -19,7 +23,7 @@ public class MainController {
 
 
     @Autowired
-    PersonService personService;
+    DefaultUserService defaultUserService;
 
     @Autowired
     BookService bookService;
@@ -27,11 +31,9 @@ public class MainController {
     @GetMapping("/mainPage")
     public String mainPage(Model model) {
         List<BookDTO> books =  bookService.getAllBooksByFree();
-        model.addAttribute("books", books);
+        model.addAttribute("allBooks", books);
         return "index";
     }
-
-
 
     @GetMapping ("/login")
     public String login() {
@@ -40,19 +42,22 @@ public class MainController {
 
     @GetMapping("/sort")
     public String sort(@RequestParam("sort") String sort, Model model) {
-        model.addAttribute("books",  bookService.sort(sort));
-        System.out.println(sort);
+        model.addAttribute("allBooks",  bookService.sort(sort));
         return "index";
     }
 
     @PostMapping ("/search")
     public String search(@RequestParam("search") String search, Model model) {
         List<BookDTO> books = bookService.findByAuthorOrName(search);
-        if (books.isEmpty()) {
+        if (!books.isEmpty()) {
+            model.addAttribute("successfulFound", true);
+            model.addAttribute("searchBooks", books);
+        } else {
             model.addAttribute("notFoundSearch", true);
         }
-        model.addAttribute("successfulFound", true);
-        model.addAttribute("searchBooks", books);
+
+        List<BookDTO> list =  bookService.getAllBooksByFree();
+        model.addAttribute("allBooks", list);
         return "index";
     }
 
@@ -62,15 +67,34 @@ public class MainController {
     }
 
 //    @PostMapping("/registration")
-//    public String addUser(@ModelAttribute("usr") @Valid Person person, BindingResult bindingResult, Model model) {
+//    public String addUser(User user, BindingResult bindingResult, Model model) {
 //        if (bindingResult.hasErrors()) {
-//            return "registration.html";
+//            logger.info("hasErrors");
+//            return "registration";
 //        }
 //
-//        if (!personService.savePerson(person)){
+//        if (!personService.savePerson(user)){
 //            model.addAttribute("usernameError", "Пользователь с таким именем уже существует");
-//            return "registration.html";
+//            logger.info("Пользователь с таким именем уже существует");
+//            return "registration";
 //        }
+//
 //        return "redirect:/login";
 //    }
+
+
+    @PostMapping("/registration")
+    public String addUser(@ModelAttribute("userForm") @Valid User userForm, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+
+        if (!defaultUserService.saveUser(userForm)){
+            model.addAttribute("alreadyExist", true);
+            return "registration";
+        }
+
+        return "redirect:/login";
+    }
 }

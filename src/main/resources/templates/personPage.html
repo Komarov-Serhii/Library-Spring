@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+
+<meta charset="utf-8">
+<head>
+    <title>personPage</title>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
+</head>
+
+<body style="zoom: 90%">
+<div id="home"></div>
+<div class="ournet-inter-area">
+    <header id="header" class="header-area">
+        <div class="logoBlock">
+            <div style="font-size: 16px; text-align: end;">
+                <a class="btn" href="${pageContext.request.contextPath}/view/language/personPage?language=RU">RU</a>
+                <a class="btn" href="${pageContext.request.contextPath}/view/language/personPage?language=EN">EN</a>
+            </div>
+            <p id="pageLogo">myLibrary</p>
+            <div class="searchFormDiv">
+                <form class="searchForm" method="post"
+                      action="${pageContext.request.contextPath}/view/personPage">
+                    <p>
+                        <label>
+                            <input class="searchField" type="search" required
+                                   placeholder="searchSite"
+                                   name="search">
+                        </label>
+                    </p>
+                    <div>
+                        <input class=searchBtn" type="submit"
+                               value="search" name="sear">
+                    </div>
+                    <th:if test="${requestScope.notFoundSearch}">
+                        <div class="notFoundMessage">
+                            <p>notFoundSearch</p>
+                        </div>
+                    </th:if>
+                </form>
+            </div>
+            <div class="mainmenu">
+                <ul>
+                    <li><a class="scroll-animite btn"
+                           href="${pageContext.request.contextPath}/view/personInfoBookPage">navigation</a></li>
+                    <li><a class="scroll-animite btn"
+                           href="${pageContext.request.contextPath}/view/personProfile">myProfile</a></li>
+                    <li><a class="scroll-animite logOutBtn"
+                           href="${pageContext.request.contextPath}/view/logout">logout</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+    </header>
+    <!-- Slider area Start -->
+    <div class="slider-area">
+        <div class="slider-bg text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="slidertext">
+                            <h1>personPage</h1>
+                        </div>
+                    </div>
+                    <div class="plansBlock">
+                        <th:if test="${window}">
+                            <div class="serviceBlock">
+                                <table class="tableService sortable">
+                                    <thead>
+                                    <tr>
+                                        <th>name"/></th>
+                                        <th>author"/></th>
+                                        <th>genre"/></th>
+                                        <th>publisher"/></th>
+                                        <th>publisherDate"/></th>
+                                        <th>description"/></th>
+                                        <th>price"/></th>
+                                        <th>order"/></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <th:forEach items="${list}" var="a">
+                                        <tr class="highlight">
+                                            <td> ${a.name}</td>
+                                            <td> ${a.author}</td>
+                                            <td> ${a.genre}</td>
+                                            <td> ${a.publisher}</td>
+                                            <td> ${a.publisherDate}</td>
+                                            <td> ${a.description}</td>
+                                            <td> ${a.price}</td>
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/view/personPage?id=${a.id}&button=order"
+                                                   onclick="return confirm('orderBookConfirm')">order</a>
+                                            </td>
+                                        </tr>
+                                    </th:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </th:if>
+                        <div class="serviceBlock">
+                            <div class="mainmenuSort">
+                                <ul class="topSort">
+                                    <li><a class="btnSort">sort<i
+                                            class="fa fa-angle-down"></i></a>
+                                        <ul class="subSort">
+                                            <li>
+                                                <a href="${pageContext.request.contextPath}/view/personPage?sort=sortName">name</a>
+                                            </li>
+                                            <li>
+                                                <a href="${pageContext.request.contextPath}/view/personPage?sort=sortAuthor">author</a>
+                                            </li>
+                                            <li>
+                                                <a href="${pageContext.request.contextPath}/view/personPage?sort=sortPublisher">publisher</a>
+                                            </li>
+                                            <li>
+                                                <a href="${pageContext.request.contextPath}/view/personPage?sort=sortPublisherDate">publisherDate</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <table class="tableService sortable">
+                                <thead>
+                                <tr>
+                                    <th>name"/></th>
+                                    <th>author"/></th>
+                                    <th>genre"/></th>
+                                    <th>publisher"/></th>
+                                    <th>publisherDate"/></th>
+                                    <th>description"/></th>
+                                    <th>price"/></th>
+                                    <th>order"/></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <th:forEach items="${books}" var="a">
+                                    <tr class="highlight">
+                                        <td> ${a.name}</td>
+                                        <td> ${a.author}</td>
+                                        <td> ${a.genre}</td>
+                                        <td> ${a.publisher}</td>
+                                        <td> ${a.publisherDate}</td>
+                                        <td> ${a.description}</td>
+                                        <td> ${a.price}</td>
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/view/personPage?id=${a.id}&button=order"
+                                               onclick="return confirm('orderBookConfirm')">order</a>
+                                        </td>
+                                    </tr>
+                                </th:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

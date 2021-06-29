@@ -1,5 +1,6 @@
 package com.example.springWeb;
 
+import org.apache.log4j.BasicConfigurator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,11 +11,6 @@ public class SpringWebApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringWebApplication.class, args);
+        BasicConfigurator.configure();
     }
-
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/static/**")
-//    .addResourceLocations("classpath:/static/");
-//    }
-
 }

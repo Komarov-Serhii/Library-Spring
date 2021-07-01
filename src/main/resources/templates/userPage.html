@@ -1,17 +1,21 @@
 
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       lang="en">
 
+<meta charset="utf-8">
+
 <head>
-    <title>registration</title>
+    <title>myLibrary</title>
 
     <style>
+
         /*
-  Template Name: Rcland - Free One Page Internet Service Provider HTML5 Template
-  Author:itcroc
-  Description:Free One Page Internet Service Provider HTML5 Template
-  Version: 1.0
-*/
+   Template Name: Rcland - Free One Page Internet Service Provider HTML5 Template
+   Author:itcroc
+   Description:Free One Page Internet Service Provider HTML5 Template
+   Version: 1.0
+ */
 
         /*
         ====================================================================
@@ -2044,71 +2048,157 @@
                 -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
             }
         }
+
     </style>
+
 </head>
 
-<body>
-<div class="slider-area">
-    <div class="slider-bgLogin text-center">
-        <div class="container">
-            <div class="row">
-                <div class="slidertext">
-                    <h3>registration</h3>
-                </div>
-                <div class="tableTariffs" id="registerForm">
-                    <div class="localRegistrationBlock">
-                        <a class="loginBtn" href="/mainPage">mainPage</a>
-                        <a class="loginBtn"
-                           href="${pageContext.request.contextPath}/view/language/registration?language=RU">RU</a>
-                        <a class="loginBtn"
-                           href="${pageContext.request.contextPath}/view/language/registration?language=EN">EN</a>
+<body style="zoom: 90%" >
+<div id="home"></div>
+<div class="ournet-inter-area">
+    <header id="header" class="header-area">
+        <div class="logoBlock">
+            <div style="font-size: 16px; text-align: end;">
+                <a class="btn" href="${pageContext.request.contextPath}/view/language/mainPage?language=RU">RU</a>
+                <a class="btn" href="${pageContext.request.contextPath}/view/language/mainPage?language=EN">EN</a>
+            </div>
+            <p id="pageLogo">myLibrary</p>
+            <div class="searchFormDiv">
+                <form class="searchForm" method="post"
+                      action="/userPage/search" >
+                    <p>
+                        <label>
+                            <input class="searchField" type="search" required
+                                   placeholder="searchSite"
+                                   name="search">
+                        </label>
+                    </p>
+                    <div>
+                        <input class="searchBtn" type="submit"
+                               value="search" name="sear">
                     </div>
 
-                    <form class="w3-container" align="center" method="post"
-                          action="/registration">
-                        <p>
-                            <label>
-                                <input class="profileEditorFields loginField" type="text" required
-                                       placeholder="name"
-                                name="name">
-                            </label>
-                        </p>
+                    <div class="notFoundMessage" th:if="${notFoundSearchInUserPage}">
+                        <p>notFoundSearch</p>
+                    </div>
 
-                        <p>
-                            <label>
-                                <input class="profileEditorFields loginField" type="text" required placeholder="Username"
-                                       name="username" autofocus="true">
-                            </label>
-                        </p>
-
-                        <p>
-                            <label>
-                                <input class="profileEditorFields loginField" type="password" required
-                                       placeholder="password"
-                                name="password">
-                            </label>
-                        </p>
-
-
-                        <input class="btn editProfileBtn" id="loginSubmitBtn" type="submit"
-                               value="registration">
-<!--                        <:if test="${requestScope.wrongData}">-->
-<!--                            <div class="w3-container">-->
-<!--                                <th:message key="incorrectEmailOrPass"/>-->
-<!--                            </div>-->
-<!--                        </:if>-->
-                            <div class="w3-container" th:if="${alreadyExist}">
-                                <p>alreadyExistPerson</p>
-                            </div>
-                    </form>
-                </div>
+                </form>
+            </div>
+            <div class="mainmenu">
+                <ul>
+                    <li><a class="scroll-animite btn"
+                           href="/personInfoBookPage">navigation</a></li>
+                    <li><a class="scroll-animite btn"
+                           href="/personProfile">myProfile</a></li>
+                    <li><a class="scroll-animite logOutBtn"
+                           href="/logout">logout</a></li>
+                </ul>
             </div>
         </div>
-        <div class="registerBlock">
-            <a class="loginBtn reg" href="/login">login</a>
+
+        <div id="time"><span id="datetime"></span></div>
+    </header>
+    <!-- Slider area Start -->
+    <div class="slider-area">
+        <div class="slider-bg text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="slidertext">
+                            <h1>mainPage</h1>
+                        </div>
+                    </div>
+                    <div class="plansBlock">
+                        <div class="serviceBlock" th:if="${successfulFound}">
+                            <table class="tableService sortable">
+                                <thead>
+                                <tr>
+                                    <th>name</th>
+                                    <th>author</th>
+                                    <th>genre</th>
+                                    <th>publisher</th>
+                                    <th>publisherDate</th>
+                                    <th>description</th>
+                                    <th>price</th>
+                                    <th>order</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="items: ${searchBooks}" class="highlight">
+                                    <td th:text="${items.name}"></td>
+                                    <td th:text="${items.author}"></td>
+                                    <td th:text="${items.genre}"></td>
+                                    <td th:text="${items.publisher}"></td>
+                                    <td th:text="${items.publisherDate}"></td>
+                                    <td th:text="${items.description}"></td>
+                                    <td th:text="${items.price}"></td>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/view/personPage?id=${a.id}&button=order"
+                                           onclick="return confirm('orderBookConfirm')">order</a>
+                                    </td>
+                                </tr>
+                                </th:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="serviceBlock">
+                            <div class="mainmenuSort">
+                                <ul class="topSort">
+                                    <li><a class="btnSort">sort<i
+                                            class="fa fa-angle-down"></i></a>
+                                        <ul class="subSort">
+                                            <li>
+                                                <a href="/userPage/sort?sort=sortName">name</a>
+                                            </li>
+                                            <li>
+                                                <a href="/userPage/sort?sort=sortAuthor">author</a>
+                                            </li>
+                                            <li>
+                                                <a href="/userPage/sort?sort=sortPublisher">publisher</a>
+                                            </li>
+                                            <li>
+                                                <a href="/userPage/sort?sort=sortPublisherDate">publisherDate</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <table class="tableService sortable">
+                                <thead>
+                                <tr>
+                                    <th>name</th>
+                                    <th>author</th>
+                                    <th>genre</th>
+                                    <th>publisher</th>
+                                    <th>publisherDate</th>
+                                    <th>description</th>
+                                    <th>price</th>
+                                    <th>order</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="book: ${allBooks}" class="highlight">
+                                    <td th:text="${book.name}"></td>
+                                    <td th:text="${book.author}"></td>
+                                    <td th:text="${book.genre}"></td>
+                                    <td th:text="${book.publisher}"></td>
+                                    <td th:text="${book.publisherDate}"></td>
+                                    <td th:text="${book.description}"></td>
+                                    <td th:text="${book.price}"></td>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/view/personPage?id=${a.id}&button=order"
+                                           onclick="return confirm('orderBookConfirm')">order</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 </body>
 </html>
-

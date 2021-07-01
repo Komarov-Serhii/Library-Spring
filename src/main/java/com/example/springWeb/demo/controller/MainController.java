@@ -23,7 +23,7 @@ public class MainController {
 
 
     @Autowired
-    DefaultUserService defaultUserService;
+    UserService userService;
 
     @Autowired
     BookService bookService;
@@ -66,23 +66,6 @@ public class MainController {
         return "registration";
     }
 
-//    @PostMapping("/registration")
-//    public String addUser(User user, BindingResult bindingResult, Model model) {
-//        if (bindingResult.hasErrors()) {
-//            logger.info("hasErrors");
-//            return "registration";
-//        }
-//
-//        if (!personService.savePerson(user)){
-//            model.addAttribute("usernameError", "Пользователь с таким именем уже существует");
-//            logger.info("Пользователь с таким именем уже существует");
-//            return "registration";
-//        }
-//
-//        return "redirect:/login";
-//    }
-
-
     @PostMapping("/registration")
     public String addUser(@ModelAttribute("userForm") @Valid User userForm, BindingResult bindingResult, Model model) {
 
@@ -90,7 +73,7 @@ public class MainController {
             return "registration";
         }
 
-        if (!defaultUserService.saveUser(userForm)){
+        if (!userService.saveUser(userForm)){
             model.addAttribute("alreadyExist", true);
             return "registration";
         }

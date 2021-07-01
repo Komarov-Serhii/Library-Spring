@@ -17,7 +17,7 @@ import javax.persistence.EntityNotFoundException;
 import java.util.*;
 
 @Service
-public class DefaultUserService implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
     private Logger logger = Logger.getLogger(MainController.class);
 
@@ -26,14 +26,11 @@ public class DefaultUserService implements UserDetailsService {
     private UserRepository userRepository;
 
     @Autowired
-    private BookRepository bookRepository;
-
-    @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     public boolean saveUser(User user) {
-        User userFromDB = userRepository.findByName(user.getUsername());
+        User userFromDB = userRepository.findByUsername(user.getUsername());
 
         if (userFromDB != null) {
             return false;
@@ -64,23 +61,9 @@ public class DefaultUserService implements UserDetailsService {
         return userRepository.findById(personId).orElseThrow(() -> new EntityNotFoundException("Person not found"));
     }
 
-    public User findByName(String name) {
-        return userRepository.findByName(name);
-    }
-
-
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-
-    public User getByLoginAndPass(String name, String password) {
-        return userRepository.findByEmailAndPassword(name, password);
-    }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByName(username);
+        User user = userRepository.findByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");

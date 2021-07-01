@@ -16,9 +16,9 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    @Column(name= "email")
+    private String username;
     private String name;
-    private String email;
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
@@ -27,6 +27,7 @@ public class User implements UserDetails {
     public User() {
 
     }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -43,8 +44,13 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return username;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 
     @Override
     public boolean isAccountNonExpired() {

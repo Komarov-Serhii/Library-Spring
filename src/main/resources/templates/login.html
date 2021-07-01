@@ -1,8 +1,7 @@
 
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org"
-lang="en">
+      lang="en">
 
 
 <meta charset="utf-8">
@@ -2014,9 +2013,7 @@ lang="en">
     }
 </style>
 <body>
-<sec:authorize access="isAuthenticated()">
-    <% response.sendRedirect("/"); %>
-</sec:authorize>
+
 
 <div class="slider-area ">
     <div class="slider-bgLogin text-center">
@@ -2040,8 +2037,7 @@ lang="en">
                         <p>
                             <label>
                                 <input class="profileEditorFields loginField" type="text" required
-                                       placeholder="login"
-                                name="login">
+                                       placeholder="Username" name="username" autofocus="true">
                             </label>
                         </p>
 

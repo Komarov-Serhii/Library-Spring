@@ -24,31 +24,47 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf()
-                .disable()
-                .authorizeRequests()
-                //Доступ только для не зарегистрированных пользователей
-                .antMatchers("/","/login", "/registration", "/mainPage", "/search", "/sort").not().fullyAuthenticated()
-                //Доступ только для пользователей с ролью Администратор
-                .antMatchers("/mainAdmin/**").hasRole("ADMIN")
-                .antMatchers("/userPage/**").hasRole("USER")
-                //Доступ разрешен всем пользователей
-                .antMatchers("/login").permitAll()
-                .antMatchers("/registration").permitAll()
-                //Все остальные страницы требуют аутентификации
-                .anyRequest().authenticated()
+//        http
+//                .csrf()
+//                .disable()
+//                .authorizeRequests()
+//                //Доступ только для не зарегистрированных пользователей
+//                .antMatchers("/","/login", "/registration", "/mainPage", "/search", "/sort").not().fullyAuthenticated()
+//                //Доступ только для пользователей с ролью Администратор
+//                .antMatchers("/mainAdmin/**").hasRole("ADMIN")
+//                .antMatchers("/userPage/**").hasRole("USER")
+//                //Доступ разрешен всем пользователей
+//                .antMatchers("/login").permitAll()
+//                .antMatchers("/registration").permitAll()
+//                //Все остальные страницы требуют аутентификации
+//                .anyRequest().authenticated()
+//                .and()
+//                //Настройка для входа в систему
+//                .formLogin()
+//                .loginPage("/login")
+//                //Перенарпавление на главную страницу после успешного входа
+//                .defaultSuccessUrl("/mainAdmin")
+//                .permitAll()
+//                .and()
+//                .logout()
+//                .permitAll()
+//                .logoutSuccessUrl("/login");
+
+
+        http.csrf().disable()
+                .authorizeRequests().antMatchers("/", "/registration","/mainPage", "/search", "/sort").not().fullyAuthenticated()
                 .and()
-                //Настройка для входа в систему
-                .formLogin()
+                .authorizeRequests().antMatchers("/userPage/**").hasRole("USER")
+                .and()
+                .authorizeRequests().antMatchers("/mainAdmin/**").hasRole("ADMIN")
+                .and()
+                .authorizeRequests().and().exceptionHandling().accessDeniedPage("/errorPage")
+                .and()
+                .authorizeRequests().and().formLogin()// Submit URL of login page.
                 .loginPage("/login")
-                //Перенарпавление на главную страницу после успешного входа
-                .defaultSuccessUrl("/userPage")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll()
-                .logoutSuccessUrl("/login");
+                .defaultSuccessUrl("/successLogin")
+                // Config for Logout Page
+                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/");
     }
 
     @Bean

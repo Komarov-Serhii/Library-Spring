@@ -7,16 +7,17 @@ import com.example.springWeb.demo.model.User;
 import com.example.springWeb.demo.service.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/")
 public class MainController {
 
     private Logger logger = Logger.getLogger(MainController.class);
@@ -28,16 +29,23 @@ public class MainController {
     @Autowired
     BookService bookService;
 
+    @GetMapping("/successLogin")
+    public void loginPageRedirect(HttpServletResponse response, Authentication authResult) throws IOException {
+
+        String role = authResult.getAuthorities().toString();
+
+        if (role.contains("ROLE_ADMIN")) {
+            response.sendRedirect(response.encodeRedirectURL("/mainAdmin"));
+        } else {
+            response.sendRedirect(response.encodeRedirectURL("/userPage"));
+        }
+    }
+
     @GetMapping("/mainPage")
     public String mainPage(Model model) {
         List<BookDTO> books =  bookService.getAllBooksByFree();
         model.addAttribute("allBooks", books);
         return "index";
-    }
-
-    @GetMapping ("/login")
-    public String login() {
-        return "login";
     }
 
     @GetMapping("/sort")

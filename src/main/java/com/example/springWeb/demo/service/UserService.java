@@ -1,9 +1,11 @@
 package com.example.springWeb.demo.service;
 
 import com.example.springWeb.demo.controller.MainController;
+import com.example.springWeb.demo.dto.InfoBookAndUserDTO;
 import com.example.springWeb.demo.model.User;
 import com.example.springWeb.demo.model.Role;
 import com.example.springWeb.demo.repository.BookRepository;
+import com.example.springWeb.demo.repository.OrderRepository;
 import com.example.springWeb.demo.repository.UserRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,12 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    BookRepository bookRepository;
+
+    @Autowired
+    OrderRepository orderRepository;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -70,5 +78,17 @@ public class UserService implements UserDetailsService {
         }
 
         return user;
+    }
+
+    public InfoBookAndUserDTO countInfoAboutUserAndBook() {
+        var infoBookAndUserDTO = new InfoBookAndUserDTO();
+
+        infoBookAndUserDTO.setCountUser(userRepository.findAll().size());
+        infoBookAndUserDTO.setCountActiveUser(userRepository.findAllByActiveTrue().size());
+        infoBookAndUserDTO.setCountBlockedUser(userRepository.findAllByActiveFalse().size());
+        infoBookAndUserDTO.setCountBook(bookRepository.findAll().size());
+        infoBookAndUserDTO.setCountBusyBook(bookRepository.findAllByActiveFalse().size());
+        infoBookAndUserDTO.setCountOrderBook(orderRepository.findAll().size());
+        return infoBookAndUserDTO;
     }
 }

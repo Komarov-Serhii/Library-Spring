@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+
+<meta charset="utf-8">
+<head>
+  <title>Admin: Main page/></title>
+
+  <link rel="stylesheet" th:href="@{/style.css}"/>
+
+</head>
+
+<body>
+<div id="home"></div>
+<div class="ournet-inter-area">
+  <header id="header" class="header-area">
+    <div class="logoBlock">
+      <div style="font-size: 16px; text-align: end;">
+        <a class="btn" href="${pageContext.request.contextPath}/view/language/admin/adminPage?language=RU">RU</a>
+        <a class="btn" href="${pageContext.request.contextPath}/view/language/admin/adminPage?language=EN">EN</a>
+      </div>
+      <p id="pageLogo">ISPAdmin</p>
+      <div class="adminmenu">
+        <ul>
+          <li><a class="scroll-animite btn"
+                 href="/mainAdmin/listBook">books</a>
+          </li>
+          <li><a class="scroll-animite btn"
+                 href="/mainAdmin/listUser">users</a></li>
+          <li><a class="scroll-animite btn"
+                 href="/mainAdmin/order">orders</a></li>
+          <li><a class="scroll-animite logOutBtn"
+                 href="/logout">logout</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="time"><span id="datetime"></span></div>
+  </header>
+  <!-- Slider area Start -->
+  <div class="slider-area">
+    <div class="slider-bg text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="slidertext">
+              <h1>mainPage</h1>
+            </div>
+          </div>
+          <div class="userInfo">
+            <h4>countUser: <span th:text="${people}"></span></h4>
+            <h4>countActive: <span th:text="${active}"></span></h4>
+            <h4>countBlocked : <span th:text="${blocked}"></span></h4>
+            <h4>countBooks: <span th:text="${books}"></span></h4>
+            <h4>countBooksBusy: <span th:text="${booksBusy}"></span></h4>
+            <h4>countOrder: <span th:text="${order}"></span></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+

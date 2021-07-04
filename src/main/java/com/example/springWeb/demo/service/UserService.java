@@ -2,10 +2,12 @@ package com.example.springWeb.demo.service;
 
 import com.example.springWeb.demo.controller.MainController;
 import com.example.springWeb.demo.dto.InfoBookAndUserDTO;
+import com.example.springWeb.demo.dto.UserDTO;
 import com.example.springWeb.demo.model.User;
 import com.example.springWeb.demo.model.Role;
 import com.example.springWeb.demo.repository.BookRepository;
 import com.example.springWeb.demo.repository.OrderRepository;
+import com.example.springWeb.demo.repository.RoleRepository;
 import com.example.springWeb.demo.repository.UserRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ public class UserService implements UserDetailsService {
     OrderRepository orderRepository;
 
     @Autowired
+    RoleRepository roleRepository;
+
+    @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
@@ -59,9 +64,15 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public List<User> getAllUsers() {
-        List<User> userList = userRepository.findAll();
-        return new ArrayList<>(userList);
+    public List<UserDTO> getAllUsers() {
+        return parsingUserInUserDTO(userRepository.findAll());
+    }
+
+    public List<UserDTO> getAllReaders() {
+//        Role userRole = new Role("ROLE_ADMIN");
+//        userRepository.getAdminList(userRole, username);
+        return parsingUserInUserDTO(userRepository.getUserListByRolesName("ROLE_USER"));
+
     }
 
 
@@ -90,5 +101,18 @@ public class UserService implements UserDetailsService {
         infoBookAndUserDTO.setCountBusyBook(bookRepository.findAllByActiveFalse().size());
         infoBookAndUserDTO.setCountOrderBook(orderRepository.findAll().size());
         return infoBookAndUserDTO;
+    }
+
+    private List<UserDTO> parsingUserInUserDTO(List<User> list) {
+        List<UserDTO> userDTOS = new ArrayList<>();
+        for (User user : list) {
+            var userDTO = new UserDTO();
+            userDTO.setId(user.getId());
+            userDTO.setName(user.getName());
+            userDTO.setEmail(user.getUsername());
+            userDTO.setActive(user.isActive());
+            userDTOS.add(userDTO);
+        }
+        return userDTOS;
     }
 }

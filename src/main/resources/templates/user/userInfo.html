@@ -3,39 +3,45 @@
       lang="en">
 
 <meta charset="utf-8">
+
 <head>
-  <title>Admin: Main page/></title>
+  <title>Navigation</title>
 
   <link rel="stylesheet" th:href="@{/style.css}"/>
 
 </head>
 
-<body>
+<body style="zoom: 90%" >
 <div id="home"></div>
 <div class="ournet-inter-area">
   <header id="header" class="header-area">
     <div class="logoBlock">
       <div style="font-size: 16px; text-align: end;">
-        <a class="btn" href="${pageContext.request.contextPath}/view/language/admin/adminPage?language=RU">RU</a>
-        <a class="btn" href="${pageContext.request.contextPath}/view/language/admin/adminPage?language=EN">EN</a>
+        <a class="btn" href="${pageContext.request.contextPath}/view/language/personInfoBookPage?language=RU">RU</a>
+        <a class="btn" href="${pageContext.request.contextPath}/view/language/personInfoBookPage?language=EN">EN</a>
       </div>
-      <p id="pageLogo">ISPAdmin</p>
+      <p id="pageLogo">navigation</p>
       <div class="adminmenu">
         <ul>
           <li><a class="scroll-animite btn"
-                 href="/listBook">books</a>
+                 href="/mainAdmin/userBook">myBooks</a>
           </li>
           <li><a class="scroll-animite btn"
-                 href="/listPerson">users</a></li>
+                 href="/mainAdmin/userOrder">myOrders</a></a>
+          </li>
           <li><a class="scroll-animite btn"
-                 href="/orderPage">orders</a></li>
+                 href="/mainAdmin/userpage">userPage</a></a>
+          </li>
           <li><a class="scroll-animite logOutBtn"
                  href="/logout">logout</a></li>
         </ul>
       </div>
     </div>
 
+
     <div id="time"><span id="datetime"></span></div>
+    <script src="${pageContext.request.contextPath}/styles/js/time.js"></script>
+
   </header>
   <!-- Slider area Start -->
   <div class="slider-area">
@@ -44,16 +50,13 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="slidertext">
-              <h1>mainPage</h1>
+              <h1>Your info</h1>
             </div>
           </div>
           <div class="userInfo">
-            <h4>countUser: <span th:text="${people}"></span></h4>
-            <h4>countActive: <span th:text="${active}"></span></h4>
-            <h4>countBlocked : <span th:text="${blocked}"></span></h4>
-            <h4>countBooks: <span th:text="${books}"></span></h4>
-            <h4>countBooksBusy: <span th:text="${booksBusy}"></span></h4>
-            <h4>countOrder: <span th:text="${order}"></span></h4>
+            <h4>myBooks :${books} </h4>
+            <h4>myOrders :${orders}</h4>
+            <h4>debt: ${debt}</h4>
           </div>
         </div>
       </div>
@@ -62,4 +65,5 @@
 </div>
 </body>
 </html>
+
 

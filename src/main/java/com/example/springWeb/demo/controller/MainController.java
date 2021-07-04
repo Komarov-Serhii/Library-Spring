@@ -7,11 +7,15 @@ import com.example.springWeb.demo.model.User;
 import com.example.springWeb.demo.service.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -39,6 +43,34 @@ public class MainController {
         } else {
             response.sendRedirect(response.encodeRedirectURL("/userPage"));
         }
+    }
+
+    @GetMapping("/error")
+    public String handleError(HttpServletRequest request, Authentication authentication) {
+        // get error status
+//        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+//
+//        if(authentication.getAuthorities().toString().equals("ADMIN")){
+//            request.setAttribute("path", "adminPage");
+//        } else {
+//            request.setAttribute("path", "clientPage");
+//        }
+//
+//        if (status != null) {
+//            int statusCode = Integer.parseInt(status.toString());
+//
+//            // display specific error page
+//            if (statusCode == HttpStatus.NOT_FOUND.value()) {
+//                return "404";
+//            } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+//                return "500";
+//            } else if (statusCode == HttpStatus.FORBIDDEN.value()) {
+//                return "403";
+//            }
+//        }
+//
+//        // display generic error
+        return "error";
     }
 
     @GetMapping("/mainPage")

@@ -23,13 +23,13 @@ public class UserController {
     public String showCheck(Model model) {
         List<BookDTO> books =  bookService.getAllBooksByFree();
         model.addAttribute("allBooks", books);
-        return "userPage";
+        return "user/userPage";
     }
 
     @GetMapping("/sort")
     public String sort(@RequestParam("sort") String sort, Model model) {
         model.addAttribute("allBooks",  bookService.sort(sort));
-        return "userPage";
+        return "user/userPage";
     }
 
     @PostMapping("/search")
@@ -44,6 +44,11 @@ public class UserController {
 
         List<BookDTO> list =  bookService.getAllBooksByFree();
         model.addAttribute("allBooks", list);
-        return "userPage";
+        return "user/userPage";
+    }
+
+    @GetMapping("/userInfo")
+    public String userInfo() {
+        return "user/userInfo" ;
     }
 }

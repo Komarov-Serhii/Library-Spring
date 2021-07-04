@@ -15,13 +15,17 @@ public class Role implements GrantedAuthority {
     private Long id;
     private String name;
     @Transient
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles",fetch = FetchType.EAGER)
     private Set<User> users;
     public Role() {
     }
 
     public Role(Long id) {
         this.id = id;
+    }
+
+    public Role(String name) {
+        this.name = name;
     }
 
     public Role(Long id, String name) {

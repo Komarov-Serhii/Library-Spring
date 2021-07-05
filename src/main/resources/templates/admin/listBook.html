@@ -44,7 +44,7 @@
             <div class="mainmenu">
                 <ul>
                     <li><a class="scroll-animite btn"
-                           href="/mainAdmin/adminPage">admin</a></li>
+                           href="/mainAdmin">admin</a></li>
                     <li><a class="scroll-animite logOutBtn"
                            href="/logout">logout</a></li>
                 </ul>
@@ -156,10 +156,8 @@
                                                     <td th:text="${book.description}"></td>
                                                     <td th:text="${book.price}"></td>
                                                     <td>
-                                                    <td>
                                                         <input type="submit" name="id" value="id" th:attr="value=${book.id}"
                                                                onclick="return confirm('orderBookConfirm')"/>
-                                                    </td>
                                                     </td>
                                                     <td>
                                                         <a class="updateButton"

@@ -8,6 +8,7 @@ import com.example.springWeb.demo.model.Book;
 import com.example.springWeb.demo.service.BookService;
 import com.example.springWeb.demo.service.OrderService;
 import com.example.springWeb.demo.service.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,9 @@ public class AdminController {
 
     @Autowired
     OrderService orderService;
+
+    private Logger logger = Logger.getLogger(AdminController.class);
+
 
     @GetMapping()
     public String showCheck(Model model) {
@@ -76,7 +80,18 @@ public class AdminController {
     @PostMapping("/listBook/delete")
     public String order(@RequestParam(name = "id") Long id, Model model) {
         bookService.deleteBook(id);
-        return "user/userPage";
+        List<BookDTO> bookDTOS = bookService.getAllBooksByFree();
+        model.addAttribute("books", bookDTOS);
+        return "admin/listBook";
+    }
+
+    @PostMapping("/listUser/block")
+    public String block(@RequestParam(name = "id") Long id,@RequestParam(name = "active") boolean active, Model model) {
+        logger.info(id);
+        logger.info(active);
+        List<UserDTO> userDTOS = userService.getAllReaders();
+        model.addAttribute("people", userDTOS);
+        return "admin/listUser";
     }
 
     @GetMapping("/order")

@@ -74,6 +74,7 @@
 
           <div class="plansBlock">
             <table class="tableService sortable">
+              <form action="/mainAdmin/listUser/block" method="post">
               <thead>
               <tr>
                 <th>#</th>
@@ -89,13 +90,15 @@
                   <td th:text="${items.id}"></td>
                   <td th:text="${items.name}"></td>
                   <td th:text="${items.email}"></td>
-                    <td th:if="${items.active == true}"><a class="block"
-                           href="${pageContext.request.contextPath}/view/admin/listPerson?button=block&id=${a.id}"
-                           onclick="return confirm('blockPersonConfirm')">block</a>
+                    <td th:if="${items.active == true}">
+                      <input type="submit" name="id" value="id" th:attr="value=${items.id}"
+                             th:attr="value=${items.active}"
+                             onclick="return confirm('blockPersonConfirm')"/>
                     </td>
-                    <td th:if="${items.active == false}"><a class="unblock"
-                           href="${pageContext.request.contextPath}/view/admin/listPerson?button=unblock&id=${a.id}"
-                           onclick="return confirm('unblockPersonConfirm')">unblock</a>
+                    <td th:if="${items.active == false}">
+                      <input type="submit" name="id" value="id" th:attr="value=${items.id}"
+                             th:attr="value=${items.active}"
+                             onclick="return confirm('unblockPersonConfirm')"/>
                     </td>
                   <td>
                     <a href="${pageContext.request.contextPath}/view/admin/listPerson?id=${a.id}&button=book">
@@ -103,6 +106,7 @@
 
                 </tr>
               </tbody>
+              </form>
             </table>
           </div>
         </div>

@@ -69,8 +69,6 @@ public class UserService implements UserDetailsService {
     }
 
     public List<UserDTO> getAllReaders() {
-//        Role userRole = new Role("ROLE_ADMIN");
-//        userRepository.getAdminList(userRole, username);
         return parsingUserInUserDTO(userRepository.getUserListByRolesName("ROLE_USER"));
 
     }

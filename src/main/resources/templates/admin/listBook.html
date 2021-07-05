@@ -9,34 +9,35 @@
     <link rel="stylesheet" th:href="@{/style.css}"/>
 
 </head>
+
 <body>
 <div id="home"></div>
 <div class="ournet-inter-area">
     <header id="header" class="header-area">
         <div class="logoBlock">
             <div style="font-size: 16px; text-align: end;">
-                <a class="btn" href="${pageContext.request.contextPath}/view/language/admin/listBook?language=RU">RU</a>
-                <a class="btn" href="${pageContext.request.contextPath}/view/language/admin/listBook?language=EN">EN</a>
+                <a class="btn" href="${pageContext.request.contextPath}/view/language/mainPage?language=RU">RU</a>
+                <a class="btn" href="${pageContext.request.contextPath}/view/language/mainPage?language=EN">EN</a>
             </div>
-            <p id="pageLogo">ISPAdmin</p>
+            <p id="pageLogo">myLibrary</p>
             <div class="searchFormDiv">
                 <form class="searchForm" method="post"
-                      action="/mainAdmin/listBook">
+                      action="/mainAdmin/listBook/search" >
                     <p>
                         <label>
                             <input class="searchField" type="search" required
                                    placeholder="searchSite"
-                            name="search">
+                                   name="search">
                         </label>
                     </p>
                     <div>
-                        <input class=searchBtn" type="submit"
+                        <input class="searchBtn" type="submit"
                                value="search" name="sear">
                     </div>
 
-                        <div class="notFoundMessage" th:if="${notFoundSearch}">
-                            <p>notFoundSearch</p>
-                        </div>
+                    <div class="notFoundMessage" th:if="${notFoundSearch}">
+                        <p>notFoundSearch</p>
+                    </div>
 
                 </form>
             </div>
@@ -49,9 +50,10 @@
                 </ul>
             </div>
         </div>
+
         <div id="time"><span id="datetime"></span></div>
     </header>
-    <!-- Slider area Start -->
+
     <div class="slider-area">
         <div class="slider-bg text-center">
             <div class="container">
@@ -60,221 +62,221 @@
                         <div class="slidertext">
                             <h1>listBooks</h1>
                             <div class="addBookBtn">
-                                <a class="addBut" href="${pageContext.request.contextPath}/view/admin/listBook?button=add"
+                                <a class="addBut"
+                                   href="${pageContext.request.contextPath}/view/admin/listBook?button=add"
                                    onclick="return confirm('removeBookConfirm')">Add Book</a>
                             </div>
                         </div>
                     </div>
 
 
+<!--                                            <div class="newTariff" th:if="${win1}">-->
+<!--                                                <form method="post"-->
+<!--                                                      action="/mainAdmin/listBook?param=${param.get('param')}&id=${param.get("id")}&button=addSubmit">-->
+<!--                                                <p>-->
+<!--                                                    <label>-->
+<!--                                                        <input class="tariff1" type="text" value="${param.get("name")}" required-->
+<!--                                                        placeholder="<fmt:message key="name"/>"-->
+<!--                                                        name="name">-->
+<!--                                                    </label>-->
+<!--                                                </p>-->
+<!--                                                <p>-->
+<!--                                                    <label>-->
+<!--                                                        <input class="tariff1" type="text" value="${param.get("author")}" required-->
+<!--                                                        placeholder="<fmt:message key="author"/>"-->
+<!--                                                        name="author">-->
+<!--                                                    </label>-->
+<!--                                                </p>-->
+<!--                                                <p>-->
+<!--                                                    <label>-->
+<!--                                                        <input class="tariff1" type="text" value="${param.get("genre")}" required-->
+<!--                                                        placeholder="<fmt:message key="genre"/>"-->
+<!--                                                        name="genre">-->
+<!--                                                    </label>-->
+<!--                                                </p>-->
+<!--                                                <p>-->
+<!--                                                    <label>-->
+<!--                                                        <input class="tariff1" type="text" value="${param.get("publisher")}" required-->
+<!--                                                        placeholder="<fmt:message key="publisher"/>"-->
+<!--                                                        name="publisher">-->
+<!--                                                    </label>-->
+<!--                                                </p>-->
 
-<!--                        <div class="newTariff" th:if="${win1}">-->
-<!--                            <form method="post"-->
-<!--                                  action="/mainAdmin/listBook?param=${param.get('param')}&id=${param.get("id")}&button=addSubmit">-->
-<!--                            <p>-->
-<!--                                <label>-->
-<!--                                    <input class="tariff1" type="text" value="${param.get("name")}" required-->
-<!--                                    placeholder="<fmt:message key="name"/>"-->
-<!--                                    name="name">-->
-<!--                                </label>-->
-<!--                            </p>-->
-<!--                            <p>-->
-<!--                                <label>-->
-<!--                                    <input class="tariff1" type="text" value="${param.get("author")}" required-->
-<!--                                    placeholder="<fmt:message key="author"/>"-->
-<!--                                    name="author">-->
-<!--                                </label>-->
-<!--                            </p>-->
-<!--                            <p>-->
-<!--                                <label>-->
-<!--                                    <input class="tariff1" type="text" value="${param.get("genre")}" required-->
-<!--                                    placeholder="<fmt:message key="genre"/>"-->
-<!--                                    name="genre">-->
-<!--                                </label>-->
-<!--                            </p>-->
-<!--                            <p>-->
-<!--                                <label>-->
-<!--                                    <input class="tariff1" type="text" value="${param.get("publisher")}" required-->
-<!--                                    placeholder="<fmt:message key="publisher"/>"-->
-<!--                                    name="publisher">-->
-<!--                                </label>-->
-<!--                            </p>-->
-
-<!--                            <p>-->
-<!--                                <label>-->
-<!--                                    <input class="tariff1" type="text" value="${param.get("publisherDate")}" required-->
-<!--                                    placeholder="<fmt:message key="publisherDate"/>"-->
-<!--                                    name="publisherDate">-->
-<!--                                </label>-->
-<!--                            </p>-->
-<!--                            <p>-->
-<!--                                <label>-->
-<!--                                    <input class="tariff1" type="text" value="${param.get("description")}" required-->
-<!--                                    placeholder="<fmt:message key="description"/>"-->
-<!--                                    name="description">-->
-<!--                                </label>-->
-<!--                            </p>-->
-<!--                            <p>-->
-<!--                                <label>-->
-<!--                                    <input class="tariff1" type="text" value="${param.get("price")}" required-->
-<!--                                    placeholder="<fmt:message key="price"/>"-->
-<!--                                    name="price">-->
-<!--                                </label>-->
-<!--                            </p>-->
-<!--                            <input class="submitBtn" type="submit"-->
-<!--                                   onclick="return confirm('<fmt:message key="addBookConfirm"/>')"-->
-<!--                            value="<fmt:message key="add"/>">-->
-<!--                            </form>-->
-<!--                        </div>-->
-
+<!--                                                <p>-->
+<!--                                                    <label>-->
+<!--                                                        <input class="tariff1" type="text" value="${param.get("publisherDate")}" required-->
+<!--                                                        placeholder="<fmt:message key="publisherDate"/>"-->
+<!--                                                        name="publisherDate">-->
+<!--                                                    </label>-->
+<!--                                                </p>-->
+<!--                                                <p>-->
+<!--                                                    <label>-->
+<!--                                                        <input class="tariff1" type="text" value="${param.get("description")}" required-->
+<!--                                                        placeholder="<fmt:message key="description"/>"-->
+<!--                                                        name="description">-->
+<!--                                                    </label>-->
+<!--                                                </p>-->
+<!--                                                <p>-->
+<!--                                                    <label>-->
+<!--                                                        <input class="tariff1" type="text" value="${param.get("price")}" required-->
+<!--                                                        placeholder="<fmt:message key="price"/>"-->
+<!--                                                        name="price">-->
+<!--                                                    </label>-->
+<!--                                                </p>-->
+<!--                                                <input class="submitBtn" type="submit"-->
+<!--                                                       onclick="return confirm('<fmt:message key="addBookConfirm"/>')"-->
+<!--                                                value="<fmt:message key="add"/>">-->
+<!--                                                </form>-->
+<!--                                            </div>-->
 
 
+                                        <div class="serviceBlock" th:if="${window}">
+                                            <table class="tableService sortable">
+                                                <form action="/mainAdmin/listBook/delete" method="post">
+                                                <thead>
+                                                <tr>
+                                                    <th>name</th>
+                                                    <th>author</th>
+                                                    <th>genre</th>
+                                                    <th>publisher</th>
+                                                    <th>publisherDate</th>
+                                                    <th>description</th>
+                                                    <th>price</th>
+                                                    <th>delete</th>
+                                                    <th>edit</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="book: ${list}" class="highlight">
+                                                    <td th:text="${book.name}"></td>
+                                                    <td th:text="${book.author}"></td>
+                                                    <td th:text="${book.genre}"></td>
+                                                    <td th:text="${book.publisher}"></td>
+                                                    <td th:text="${book.publisherDate}"></td>
+                                                    <td th:text="${book.description}"></td>
+                                                    <td th:text="${book.price}"></td>
+                                                    <td>
+                                                    <td>
+                                                        <input type="submit" name="id" value="id" th:attr="value=${book.id}"
+                                                               onclick="return confirm('orderBookConfirm')"/>
+                                                    </td>
+                                                    </td>
+                                                    <td>
+                                                        <a class="updateButton"
+                                                           href="${pageContext.request.contextPath}/view/admin/listBook?id=${a.id}&name=${a.name}&author=${a.author}&genre=${a.genre}&publisher=${a.publisher}&publisherDate=${a.publisherDate}&description=${a.description}&price=${a.price}&button=set">edit</a>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                                </form>
+                                            </table>
+                                        </div>
 
 
+                    <!--                    <c:if test="${win}">-->
+                    <!--                        <div class="newTariff">-->
+                    <!--                            <form method="post"-->
+                    <!--                                  action="${pageContext.request.contextPath}/view/admin/listBook?param=${param.get('param')}&id=${param.get("id")}&button=update">-->
+                    <!--                            <p>-->
+                    <!--                                <label>-->
+                    <!--                                    <input class="tariff1" type="text" value="${param.get("name")}" required-->
+                    <!--                                    placeholder="<fmt:message key="name"/>"-->
+                    <!--                                    name="name">-->
+                    <!--                                </label>-->
+                    <!--                            </p>-->
+                    <!--                            <p>-->
+                    <!--                                <label>-->
+                    <!--                                    <input class="tariff1" type="text" value="${param.get("author")}" required-->
+                    <!--                                    placeholder="<fmt:message key="author"/>"-->
+                    <!--                                    name="author">-->
+                    <!--                                </label>-->
+                    <!--                            </p>-->
+                    <!--                            <p>-->
+                    <!--                                <label>-->
+                    <!--                                    <input class="tariff1" type="text" value="${param.get("genre")}" required-->
+                    <!--                                    placeholder="<fmt:message key="genre"/>"-->
+                    <!--                                    name="genre">-->
+                    <!--                                </label>-->
+                    <!--                            </p>-->
+                    <!--                            <p>-->
+                    <!--                                <label>-->
+                    <!--                                    <input class="tariff1" type="text" value="${param.get("publisher")}" required-->
+                    <!--                                    placeholder="<fmt:message key="publisher"/>"-->
+                    <!--                                    name="publisher">-->
+                    <!--                                </label>-->
+                    <!--                            </p>-->
 
-                        <div class="serviceBlock" th:if="${window}">
-                            <table class="tableService sortable">
-                                <thead>
-                                <tr>
-                                    <th>name</th>
-                                    <th>author</th>
-                                    <th>genre</th>
-                                    <th>publisher</th>
-                                    <th>publisherDate</th>
-                                    <th>description</th>
-                                    <th>price</th>
-                                    <th>delete</th>
-                                    <th>edit</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="book: ${list}" class="highlight">
-                                    <td th:text="${book.name}"></td>
-                                    <td th:text="${book.author}"></td>
-                                    <td th:text="${book.genre}"></td>
-                                    <td th:text="${book.publisher}"></td>
-                                    <td th:text="${book.publisherDate}"></td>
-                                    <td th:text="${book.description}"></td>
-                                    <td th:text="${book.price}"></td>
-                                        <td>
-                                            <a href="${pageContext.request.contextPath}/view/admin/listBook?id=${a.id}&button=delete"
-                                               onclick="return confirm('removeBookConfirm')">delete</a>
-                                        </td>
-                                        <td>
-                                            <a class="updateButton"
-                                               href="${pageContext.request.contextPath}/view/admin/listBook?id=${a.id}&name=${a.name}&author=${a.author}&genre=${a.genre}&publisher=${a.publisher}&publisherDate=${a.publisherDate}&description=${a.description}&price=${a.price}&button=set">edit</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-
-
-<!--                    <c:if test="${win}">-->
-<!--                        <div class="newTariff">-->
-<!--                            <form method="post"-->
-<!--                                  action="${pageContext.request.contextPath}/view/admin/listBook?param=${param.get('param')}&id=${param.get("id")}&button=update">-->
-<!--                            <p>-->
-<!--                                <label>-->
-<!--                                    <input class="tariff1" type="text" value="${param.get("name")}" required-->
-<!--                                    placeholder="<fmt:message key="name"/>"-->
-<!--                                    name="name">-->
-<!--                                </label>-->
-<!--                            </p>-->
-<!--                            <p>-->
-<!--                                <label>-->
-<!--                                    <input class="tariff1" type="text" value="${param.get("author")}" required-->
-<!--                                    placeholder="<fmt:message key="author"/>"-->
-<!--                                    name="author">-->
-<!--                                </label>-->
-<!--                            </p>-->
-<!--                            <p>-->
-<!--                                <label>-->
-<!--                                    <input class="tariff1" type="text" value="${param.get("genre")}" required-->
-<!--                                    placeholder="<fmt:message key="genre"/>"-->
-<!--                                    name="genre">-->
-<!--                                </label>-->
-<!--                            </p>-->
-<!--                            <p>-->
-<!--                                <label>-->
-<!--                                    <input class="tariff1" type="text" value="${param.get("publisher")}" required-->
-<!--                                    placeholder="<fmt:message key="publisher"/>"-->
-<!--                                    name="publisher">-->
-<!--                                </label>-->
-<!--                            </p>-->
-
-<!--                            <p>-->
-<!--                                <label>-->
-<!--                                    <input class="tariff1" type="text" value="${param.get("publisherDate")}" required-->
-<!--                                    placeholder="<fmt:message key="publisherDate"/>"-->
-<!--                                    name="publisherDate">-->
-<!--                                </label>-->
-<!--                            </p>-->
-<!--                            <p>-->
-<!--                                <label>-->
-<!--                                    <input class="tariff1" type="text" value="${param.get("description")}" required-->
-<!--                                    placeholder="<fmt:message key="description"/>"-->
-<!--                                    name="description">-->
-<!--                                </label>-->
-<!--                            </p>-->
-<!--                            <p>-->
-<!--                                <label>-->
-<!--                                    <input class="tariff1" type="text" value="${param.get("price")}" required-->
-<!--                                    placeholder="<fmt:message key="price"/>"-->
-<!--                                    name="price">-->
-<!--                                </label>-->
-<!--                            </p>-->
-<!--                            <input class="submitBtn" type="submit"-->
-<!--                                   onclick="return confirm('<fmt:message key="editBookConfirm"/>')"-->
-<!--                            value="<fmt:message key="update"/>">-->
-<!--                            </form>-->
-<!--                        </div>-->
-<!--                    </c:if>-->
+                    <!--                            <p>-->
+                    <!--                                <label>-->
+                    <!--                                    <input class="tariff1" type="text" value="${param.get("publisherDate")}" required-->
+                    <!--                                    placeholder="<fmt:message key="publisherDate"/>"-->
+                    <!--                                    name="publisherDate">-->
+                    <!--                                </label>-->
+                    <!--                            </p>-->
+                    <!--                            <p>-->
+                    <!--                                <label>-->
+                    <!--                                    <input class="tariff1" type="text" value="${param.get("description")}" required-->
+                    <!--                                    placeholder="<fmt:message key="description"/>"-->
+                    <!--                                    name="description">-->
+                    <!--                                </label>-->
+                    <!--                            </p>-->
+                    <!--                            <p>-->
+                    <!--                                <label>-->
+                    <!--                                    <input class="tariff1" type="text" value="${param.get("price")}" required-->
+                    <!--                                    placeholder="<fmt:message key="price"/>"-->
+                    <!--                                    name="price">-->
+                    <!--                                </label>-->
+                    <!--                            </p>-->
+                    <!--                            <input class="submitBtn" type="submit"-->
+                    <!--                                   onclick="return confirm('<fmt:message key="editBookConfirm"/>')"-->
+                    <!--                            value="<fmt:message key="update"/>">-->
+                    <!--                            </form>-->
+                    <!--                        </div>-->
+                    <!--                    </c:if>-->
 
 
-                    <div class="plansBlock">
-                        <table class="tableService sortable">
-                            <thead>
-                            <tr>
-                                <th>name</th>
-                                <th>author</th>
-                                <th>genre</th>
-                                <th>publisher</th>
-                                <th>publisherDate</th>
-                                <th>description</th>
-                                <th>price</th>
-                                <th>delete</th>
-                                <th>edit</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="book: ${books}" class="highlight">
-                                <td th:text="${book.name}"></td>
-                                <td th:text="${book.author}"></td>
-                                <td th:text="${book.genre}"></td>
-                                <td th:text="${book.publisher}"></td>
-                                <td th:text="${book.publisherDate}"></td>
-                                <td th:text="${book.description}"></td>
-                                <td th:text="${book.price}"></td>
-                                    <td>
-                                        <a href="${pageContext.request.contextPath}/view/admin/listBook?id=${a.id}&button=delete"
-                                           onclick="return confirm('removeBookConfirm')">delete</a>
-                                    </td>
-                                    <td>
-                                        <a class="updateButton"
-                                           href="${pageContext.request.contextPath}/view/admin/listBook?id=${a.id}&button=set&name=${a.name}&author=${a.author}&genre=${a.genre}&publisher=${a.publisher}&publisherDate=${a.publisherDate}&description=${a.description}&price=${a.price}">edit</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                                        <div class="plansBlock">
+                                            <table class="tableService sortable">
+                                                <form action="/mainAdmin/listBook/delete" method="post">
+                                                <thead>
+                                                <tr>
+                                                    <th>name</th>
+                                                    <th>author</th>
+                                                    <th>genre</th>
+                                                    <th>publisher</th>
+                                                    <th>publisherDate</th>
+                                                    <th>description</th>
+                                                    <th>price</th>
+                                                    <th>delete</th>
+                                                    <th>edit</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="book: ${books}" class="highlight">
+                                                    <td th:text="${book.name}"></td>
+                                                    <td th:text="${book.author}"></td>
+                                                    <td th:text="${book.genre}"></td>
+                                                    <td th:text="${book.publisher}"></td>
+                                                    <td th:text="${book.publisherDate}"></td>
+                                                    <td th:text="${book.description}"></td>
+                                                    <td th:text="${book.price}"></td>
+                                                    <td>
+                                                        <input type="submit" name="id" value="id" th:attr="value=${book.id}"
+                                                               onclick="return confirm('orderBookConfirm')"/>
+                                                    </td>
+                                                    <td>
+                                                        <a class="updateButton"
+                                                           href="${pageContext.request.contextPath}/view/admin/listBook?id=${a.id}&button=set&name=${a.name}&author=${a.author}&genre=${a.genre}&publisher=${a.publisher}&publisherDate=${a.publisherDate}&description=${a.description}&price=${a.price}">edit</a>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                                </form>
+                                            </table>
+                                        </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 </div>
-
 </body>
 </html>

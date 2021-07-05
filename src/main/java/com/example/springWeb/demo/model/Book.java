@@ -19,9 +19,6 @@ public class Book {
     private long id;
 
     private String name;
-    @Column(name="return_date")
-    private Date date;
-    private int debt;
     @OneToOne
     @JoinColumn(name = "details_id")
     private Details details;

@@ -92,11 +92,10 @@
                                     <td th:text="${items.description}"></td>
                                     <td th:text="${items.price}"></td>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/view/personPage?id=${a.id}&button=order"
+                                        <a href="/userPage/order" th:attr="value=${items.id}"
                                            onclick="return confirm('orderBookConfirm')">order</a>
                                     </td>
                                 </tr>
-                                </th:forEach>
                                 </tbody>
                             </table>
                         </div>
@@ -123,7 +122,9 @@
                                     </li>
                                 </ul>
                             </div>
+
                             <table class="tableService sortable">
+                                <form action="/userPage/order" method="post">
                                 <thead>
                                 <tr>
                                     <th>name</th>
@@ -146,11 +147,13 @@
                                     <td th:text="${book.description}"></td>
                                     <td th:text="${book.price}"></td>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/view/personPage?id=${a.id}&button=order"
-                                           onclick="return confirm('orderBookConfirm')">order</a>
+                                        <input type="submit" name="id" value="id" th:attr="value=${book.id}"
+                                               onclick="return confirm('orderBookConfirm')"/>
+
                                     </td>
                                 </tr>
                                 </tbody>
+                                </form>
                             </table>
                         </div>
                     </div>

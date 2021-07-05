@@ -2,6 +2,8 @@ package com.example.springWeb.demo.controller;
 
 import com.example.springWeb.demo.dto.BookDTO;
 import com.example.springWeb.demo.service.BookService;
+import com.example.springWeb.demo.service.OrderService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +18,14 @@ import java.util.List;
 @RequestMapping("userPage")
 public class UserController {
 
+    private Logger logger = Logger.getLogger(UserController.class);
+
+
     @Autowired
     BookService bookService;
+
+    @Autowired
+    OrderService orderService;
 
     @GetMapping
     public String showCheck(Model model) {
@@ -44,6 +52,12 @@ public class UserController {
 
         List<BookDTO> list =  bookService.getAllBooksByFree();
         model.addAttribute("allBooks", list);
+        return "user/userPage";
+    }
+
+    @PostMapping("/order")
+    public String order(@RequestParam(name = "id") Long id, Model model) {
+        orderService.saveOrder(id);
         return "user/userPage";
     }
 

@@ -3,6 +3,7 @@ package com.example.springWeb.demo.service;
 import com.example.springWeb.demo.dto.BookDTO;
 import com.example.springWeb.demo.model.Book;
 import com.example.springWeb.demo.repository.BookRepository;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +18,16 @@ public class BookService {
     @Autowired
     BookRepository bookRepository;
 
+    private Logger logger = Logger.getLogger(BookService.class);
+
+
     public Book saveBook(Book book) {
         return bookRepository.save(book);
     }
 
     public boolean deleteBook(long bookId) {
         bookRepository.deleteById(bookId);
-        return false;
+        return true;
     }
 
 

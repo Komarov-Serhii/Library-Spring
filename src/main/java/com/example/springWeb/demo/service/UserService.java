@@ -1,9 +1,11 @@
 package com.example.springWeb.demo.service;
 
 import com.example.springWeb.demo.controller.MainController;
+import com.example.springWeb.demo.dto.BookByUserDTO;
 import com.example.springWeb.demo.dto.InfoBookAndUserDTO;
 import com.example.springWeb.demo.dto.InfoUserDTO;
 import com.example.springWeb.demo.dto.UserDTO;
+import com.example.springWeb.demo.model.Book;
 import com.example.springWeb.demo.model.Order;
 import com.example.springWeb.demo.model.User;
 import com.example.springWeb.demo.model.Role;
@@ -20,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.sql.Date;
 import java.util.*;
 
 @Service
@@ -120,13 +123,34 @@ public class UserService implements UserDetailsService {
         int count = 0;
         count += order.stream().mapToInt(Order::getDebt).sum();
 
-
-
         return InfoUserDTO.builder()
                 .contBook(order.size())
                 .contOrder(orderRepository.findAllByUser_IdAndStatusIsFalse(user_id).size())
                 .contDebt(count)
                 .build();
+    }
+
+    public List<BookByUserDTO> bookByUser(long id) {
+        List<Order> order = orderRepository.findAllByUser_IdAndStatusIsTrue(id);
+        Book book;
+        List<BookByUserDTO> list = new ArrayList<>();
+        for (Order ord : order) {
+            book = bookRepository.getById(ord.getBook().getId());
+            list.add(BookByUserDTO.builder()
+                    .name(book.getName())
+                    .author(book.getDetails().getAuthor())
+                    .publisher(book.getDetails().getPublisher())
+                    .publisherDate(book.getDetails().getPublisherDate())
+                    .description(book.getDetails().getDescription())
+                    .genre(book.getDetails().getGenre())
+                    .price(book.getDetails().getPrice())
+                    .debt(ord.getDebt())
+                    .returnDate(ord.getDate())
+                    .build());
+
+        }
+        logger.info(list);
+        return list;
     }
 
 //    private InfoUserDTO parsingToDto(Order order) {

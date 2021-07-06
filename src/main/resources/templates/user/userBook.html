@@ -1,10 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
 
+<meta charset="utf-8">
+
+<head>
+  <title>List of books</title>
+
+  <link rel="stylesheet" th:href="@{/style.css}"/>
+
+</head>
+
+<body style="zoom: 90%" >
+<div id="home"></div>
+<div class="ournet-inter-area">
+  <header id="header" class="header-area">
+    <div class="logoBlock">
+      <div style="font-size: 16px; text-align: end;">
+        <a class="btn" href="${pageContext.request.contextPath}/view/language/personBookPage?language=RU">RU</a>
+        <a class="btn" href="${pageContext.request.contextPath}/view/language/personBookPage?language=EN">EN</a>
+      </div>
+      <p id="pageLogo">myLibrary</p>
+      <div class="adminmenu">
+        <ul>
+          <li><a class="scroll-animite btn"
+                 href="/userPage">personPage</a>
+          </li>
+          <li><a class="scroll-animite logOutBtn"
+                 href="/logout">logout</a></li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div id="time"><span id="datetime"></span></div>
+  </header>
+  <!-- Slider area Start -->
+  <div class="slider-area">
+    <div class="slider-bg text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="slidertext">
+              <h1>myBooks</h1>
+            </div>
+          </div>
+          <div class="plansBlock">
+            <table class="tableService">
+              <thead>
+              <tr>
+                <th>name</th>
+                <th>author</th>
+                <th>genre</th>
+                <th>publisher</th>
+                <th>publisherDate</th>
+                <th>description</th>
+                <th>price</th>
+                <th>penalty</th>
+                <th>deadline</th>
+                <th>return</th>
+              </tr>
+              </thead>
+              <tbody>
+                <tr th:each="book: ${books}" class="highlight">
+                  <td th:text="${book.name}"></td>
+                  <td th:text="${book.author}"></td>
+                  <td th:text="${book.genre}"></td>
+                  <td th:text="${book.publisher}"></td>
+                  <td th:text="${book.publisherDate}"></td>
+                  <td th:text="${book.description}"></td>
+                  <td th:text="${book.price}"></td>
+                  <td th:text="${book.debt}"></td>
+                  <td th:text="${book.returnDate}"></td>
+                  <form action="/mainAdmin/userBook/return" method="post">
+                    <td th:if="${book.debt == 0}">
+                      <button type="submit" onclick="return confirm('returnConfirm')">return</button>
+                      <input type="hidden" name="id" value="id" />
+                    </td>
+                  </form>
+                  <form action="/mainAdmin/userBook/pay" method="post">
+                    <td th:if="${book.debt > 0}">
+                      <button type="submit" onclick="return confirm('payConfirm')">payFine</button>
+                      <input type="hidden" name="id" value="id" />
+                    </td>
+                  </form>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 </body>
 </html>

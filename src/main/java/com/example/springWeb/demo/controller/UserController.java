@@ -1,5 +1,6 @@
 package com.example.springWeb.demo.controller;
 
+import com.example.springWeb.demo.dto.BookByUserDTO;
 import com.example.springWeb.demo.dto.BookDTO;
 import com.example.springWeb.demo.dto.InfoUserDTO;
 import com.example.springWeb.demo.model.User;
@@ -80,5 +81,14 @@ public class UserController {
         model.addAttribute("orders", infoUserDTO.getContOrder());
         model.addAttribute("debt", infoUserDTO.getContDebt());
         return "user/userInfo" ;
+    }
+
+    @GetMapping("/userBook")
+    public String userBook(Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long id_user = ((User)principal).getId();
+        List<BookByUserDTO> bookByUserDTO = userService.bookByUser(id_user);
+        model.addAttribute("books", bookByUserDTO);
+        return "user/userBook" ;
     }
 }

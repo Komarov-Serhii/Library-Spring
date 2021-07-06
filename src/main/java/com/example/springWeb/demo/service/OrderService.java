@@ -18,6 +18,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -42,6 +43,7 @@ public class OrderService {
         return true;
     }
 
+
     @Transactional
     public boolean saveOrder(Long id_book) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -62,6 +64,10 @@ public class OrderService {
 
     public Order getOrderById(long id) {
         return orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Order not found"));
+    }
+
+    public Optional<Order> getOrderByBookId(long id) {
+        return Optional.ofNullable(orderRepository.findByBook_id(id).orElseThrow(() -> new EntityNotFoundException("Order not found")));
     }
 
 //    public Order getOrderByUser(long id) {

@@ -127,6 +127,29 @@ public class UserService implements UserDetailsService {
                 .build();
     }
 
+
+    public List<BookDTO> bookByUserForAdmin(long id) {
+        List<Order> order = orderRepository.findAllByUser_IdAndStatusIsTrue(id);
+        Book book;
+        List<BookDTO> list = new ArrayList<>();
+        for (Order ord : order) {
+            book = bookRepository.getById(ord.getBook().getId());
+            list.add(BookDTO.builder()
+                    .id(book.getId())
+                    .name(book.getName())
+                    .author(book.getDetails().getAuthor())
+                    .publisher(book.getDetails().getPublisher())
+                    .publisherDate(book.getDetails().getPublisherDate())
+                    .description(book.getDetails().getDescription())
+                    .price(book.getDetails().getPrice())
+                    .genre(book.getDetails().getGenre())
+                    .build());
+
+        }
+        logger.info(list);
+        return list;
+    }
+
     public List<BookByUserDTO> bookByUser(long id) {
         List<Order> order = orderRepository.findAllByUser_IdAndStatusIsTrue(id);
         Book book;

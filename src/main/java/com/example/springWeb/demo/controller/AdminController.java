@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("mainAdmin")
@@ -101,13 +102,17 @@ public class AdminController {
 
     @PostMapping("/listUser/checkBook")
     public String checkBook(@RequestParam(name = "id") Long id, Model model) {
-        //List<BookDTO> list = bookService.listBookByUser(id);
 
+        Optional<Order> order = orderService.getOrderByBookId(id);
+        List<BookDTO> list = userService.bookByUserForAdmin(order.get().getUser().getId());
         model.addAttribute("win", true);
+        if (list.isEmpty()) {
+            model.addAttribute("notBooks", true);
+        } else {
+            model.addAttribute("notBooks", false);
+        }
 
-//        if (list.isEmpty()) {
-//
-//        }
+        model.addAttribute("books", list);
 
         List<UserDTO> userDTOS = userService.getAllReaders();
         model.addAttribute("people", userDTOS);

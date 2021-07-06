@@ -110,16 +110,16 @@ public class BookService {
     private List<BookDTO> parsingBookInBookDTO(List<Book> list) {
         List<BookDTO> bookDTOs = new ArrayList<>();
         for (Book book : list) {
-            var bookDTO = new BookDTO();
-            bookDTO.setId(book.getId());
-            bookDTO.setName(book.getName());
-            bookDTO.setAuthor(book.getDetails().getAuthor());
-            bookDTO.setPublisher(book.getDetails().getPublisher());
-            bookDTO.setPublisherDate(book.getDetails().getPublisherDate());
-            bookDTO.setDescription(book.getDetails().getDescription());
-            bookDTO.setPrice(book.getDetails().getPrice());
-            bookDTO.setGenre(book.getDetails().getGenre());
-            bookDTOs.add(bookDTO);
+            bookDTOs.add(BookDTO.builder()
+                    .id(book.getId())
+                    .name(book.getName())
+                    .author(book.getDetails().getAuthor())
+                    .publisher(book.getDetails().getPublisher())
+                    .publisherDate(book.getDetails().getPublisherDate())
+                    .description(book.getDetails().getDescription())
+                    .price(book.getDetails().getPrice())
+                    .genre(book.getDetails().getGenre())
+                    .build());
         }
         return bookDTOs;
     }

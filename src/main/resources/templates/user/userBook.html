@@ -72,16 +72,16 @@
                   <td th:text="${book.price}"></td>
                   <td th:text="${book.debt}"></td>
                   <td th:text="${book.returnDate}"></td>
-                  <form action="/mainAdmin/userBook/return" method="post">
+                  <form action="/userPage/userBook/return" method="post">
                     <td th:if="${book.debt == 0}">
                       <button type="submit" onclick="return confirm('returnConfirm')">return</button>
-                      <input type="hidden" name="id" value="id" />
+                      <input type="hidden" name="id" value="id" th:attr="value=${book.id}"/>
                     </td>
                   </form>
-                  <form action="/mainAdmin/userBook/pay" method="post">
+                  <form action="/userPage/userBook/pay" method="post">
                     <td th:if="${book.debt > 0}">
                       <button type="submit" onclick="return confirm('payConfirm')">payFine</button>
-                      <input type="hidden" name="id" value="id" />
+                      <input type="hidden" name="id" value="id" th:attr="value=${book.id}"/>
                     </td>
                   </form>
                 </tr>

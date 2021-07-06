@@ -91,4 +91,48 @@ public class UserController {
         model.addAttribute("books", bookByUserDTO);
         return "user/userBook" ;
     }
+
+    @PostMapping("/userBook/return")
+    public String returnBook(@RequestParam(name = "id") Long id, Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long id_user = ((User)principal).getId();
+        orderService.returnOrder(id_user,id);
+
+        List<BookByUserDTO> bookByUserDTO = userService.bookByUser(id_user);
+        model.addAttribute("books", bookByUserDTO);
+        return "user/userBook";
+    }
+
+    @PostMapping("/userBook/pay")
+    public String pay(@RequestParam(name = "id") Long id, Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long id_user = ((User)principal).getId();
+        orderService.payOrder(id_user,id);
+
+
+        List<BookByUserDTO> bookByUserDTO = userService.bookByUser(id_user);
+        model.addAttribute("books", bookByUserDTO);
+        return "user/userBook";
+    }
+
+    @GetMapping("/userOrder")
+    public String userOrder(Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long id_user = ((User)principal).getId();
+        List<BookDTO> bookDTOS = userService.orderByUser(id_user);
+        model.addAttribute("orders", bookDTOS);
+        return "user/userOrder" ;
+    }
+
+    @PostMapping("/userOrder/decline")
+    public String decline(@RequestParam(name = "id") Long id, Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long id_user = ((User)principal).getId();
+        orderService.declineOrder(id_user,id);
+
+
+        List<BookDTO> bookDTOS = userService.orderByUser(id_user);
+        model.addAttribute("orders", bookDTOS);
+        return "user/userBook";
+    }
 }

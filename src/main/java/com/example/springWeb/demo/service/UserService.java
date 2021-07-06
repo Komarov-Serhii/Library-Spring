@@ -1,10 +1,7 @@
 package com.example.springWeb.demo.service;
 
 import com.example.springWeb.demo.controller.MainController;
-import com.example.springWeb.demo.dto.BookByUserDTO;
-import com.example.springWeb.demo.dto.InfoBookAndUserDTO;
-import com.example.springWeb.demo.dto.InfoUserDTO;
-import com.example.springWeb.demo.dto.UserDTO;
+import com.example.springWeb.demo.dto.*;
 import com.example.springWeb.demo.model.Book;
 import com.example.springWeb.demo.model.Order;
 import com.example.springWeb.demo.model.User;
@@ -137,6 +134,7 @@ public class UserService implements UserDetailsService {
         for (Order ord : order) {
             book = bookRepository.getById(ord.getBook().getId());
             list.add(BookByUserDTO.builder()
+                    .id(book.getId())
                     .name(book.getName())
                     .author(book.getDetails().getAuthor())
                     .publisher(book.getDetails().getPublisher())
@@ -153,10 +151,28 @@ public class UserService implements UserDetailsService {
         return list;
     }
 
-//    private InfoUserDTO parsingToDto(Order order) {
-//        return OrderDto.builder().id(order.getId()).userId(order.getUser().getId()).cruiseDto(cruiseService.mapToDto(order.getCruise()))
-//                .status(order.getStatus()).build();
-//    }
+    public List<BookDTO> orderByUser(long id) {
+        List<Order> order = orderRepository.findAllByUser_IdAndStatusIsFalse(id);
+        Book book;
+        List<BookDTO> list = new ArrayList<>();
+        for (Order ord : order) {
+            book = bookRepository.getById(ord.getBook().getId());
+            list.add(BookDTO.builder()
+                    .id(book.getId())
+                    .name(book.getName())
+                    .author(book.getDetails().getAuthor())
+                    .publisher(book.getDetails().getPublisher())
+                    .publisherDate(book.getDetails().getPublisherDate())
+                    .description(book.getDetails().getDescription())
+                    .price(book.getDetails().getPrice())
+                    .genre(book.getDetails().getGenre())
+                    .build());
+
+        }
+        logger.info(list);
+        return list;
+    }
+
 
 
     private List<UserDTO> parsingUserInUserDTO(List<User> list) {

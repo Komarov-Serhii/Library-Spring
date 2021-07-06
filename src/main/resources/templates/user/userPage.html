@@ -91,10 +91,12 @@
                                     <td th:text="${items.publisherDate}"></td>
                                     <td th:text="${items.description}"></td>
                                     <td th:text="${items.price}"></td>
+                                    <form action="/userPage/order" method="post">
                                     <td>
-                                        <a href="/userPage/order" th:attr="value=${items.id}"
-                                           onclick="return confirm('orderBookConfirm')">order</a>
+                                        <button type="submit" onclick="return confirm('orderBookConfirm')">order</button>
+                                        <input type="hidden" name="id" value="id" th:attr="value=${items.id}"/>
                                     </td>
+                                    </form>
                                 </tr>
                                 </tbody>
                             </table>
@@ -124,7 +126,6 @@
                             </div>
 
                             <table class="tableService sortable">
-                                <form action="/userPage/order" method="post">
                                 <thead>
                                 <tr>
                                     <th>name</th>
@@ -146,14 +147,14 @@
                                     <td th:text="${book.publisherDate}"></td>
                                     <td th:text="${book.description}"></td>
                                     <td th:text="${book.price}"></td>
+                                    <form action="/userPage/order" method="post">
                                     <td>
-                                        <input type="submit" name="id" value="id" th:attr="value=${book.id}"
-                                               onclick="return confirm('orderBookConfirm')"/>
-
+                                        <button type="submit" onclick="return confirm('orderBookConfirm')">order</button>
+                                        <input type="hidden" name="id" value="id" th:attr="value=${book.id}"/>
                                     </td>
+                                    </form>
                                 </tr>
                                 </tbody>
-                                </form>
                             </table>
                         </div>
                     </div>

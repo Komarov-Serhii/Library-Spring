@@ -87,6 +87,32 @@ public class OrderService {
         return true;
     }
 
+    public boolean returnOrder(long id, long book_id) {
+        Order order = orderRepository.findByUser_IdAndBook_Id(id,book_id);
+        orderRepository.deleteById(order.getId());
+        Book book = bookRepository.getById(order.getBook().getId());
+        book.setActive(true);
+        bookRepository.save(book);
+        return true;
+    }
+    public boolean payOrder(long id, long book_id) {
+        Order order = orderRepository.findByUser_IdAndBook_Id(id,book_id);
+        orderRepository.deleteById(order.getId());
+        Book book = bookRepository.getById(order.getBook().getId());
+        book.setActive(true);
+        bookRepository.save(book);
+        return true;
+    }
+
+    public boolean declineOrder(long id, long book_id) {
+        Order order = orderRepository.findByUser_IdAndBook_Id(id,book_id);
+        orderRepository.deleteById(order.getId());
+        Book book = bookRepository.getById(order.getBook().getId());
+        book.setActive(true);
+        bookRepository.save(book);
+        return true;
+    }
+
 
 
     private List<OrderDTO> parsingOrder(List<Order> order) {

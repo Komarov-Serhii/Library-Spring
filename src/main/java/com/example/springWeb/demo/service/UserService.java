@@ -2,7 +2,9 @@ package com.example.springWeb.demo.service;
 
 import com.example.springWeb.demo.controller.MainController;
 import com.example.springWeb.demo.dto.InfoBookAndUserDTO;
+import com.example.springWeb.demo.dto.InfoUserDTO;
 import com.example.springWeb.demo.dto.UserDTO;
+import com.example.springWeb.demo.model.Order;
 import com.example.springWeb.demo.model.User;
 import com.example.springWeb.demo.model.Role;
 import com.example.springWeb.demo.repository.BookRepository;
@@ -56,6 +58,18 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
+    public boolean changeActive(Long id, boolean active) {
+        User user = userRepository.getById(id);
+        logger.info(user);
+        if (active) {
+            user.setActive(false);
+        } else {
+            user.setActive(true);
+        }
+        userRepository.save(user);
+        logger.info(user);
+        return true;
+    }
 
 
     public boolean deleteUser(long personId) {
@@ -101,6 +115,26 @@ public class UserService implements UserDetailsService {
         return infoBookAndUserDTO;
     }
 
+    public InfoUserDTO countInfoUserDTO(long user_id) {
+        List<Order> order = orderRepository.findAllByUser_IdAndStatusIsTrue(user_id);
+        int count = 0;
+        count += order.stream().mapToInt(Order::getDebt).sum();
+
+
+
+        return InfoUserDTO.builder()
+                .contBook(order.size())
+                .contOrder(orderRepository.findAllByUser_IdAndStatusIsFalse(user_id).size())
+                .contDebt(count)
+                .build();
+    }
+
+//    private InfoUserDTO parsingToDto(Order order) {
+//        return OrderDto.builder().id(order.getId()).userId(order.getUser().getId()).cruiseDto(cruiseService.mapToDto(order.getCruise()))
+//                .status(order.getStatus()).build();
+//    }
+
+
     private List<UserDTO> parsingUserInUserDTO(List<User> list) {
         List<UserDTO> userDTOS = new ArrayList<>();
         for (User user : list) {
@@ -113,4 +147,5 @@ public class UserService implements UserDetailsService {
         }
         return userDTOS;
     }
+
 }

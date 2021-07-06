@@ -19,7 +19,7 @@ public class Book {
     private long id;
 
     private String name;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "details_id")
     private Details details;
     private boolean active;

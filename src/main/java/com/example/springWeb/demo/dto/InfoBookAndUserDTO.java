@@ -1,6 +1,6 @@
 package com.example.springWeb.demo.dto;
 
-import lombok.Builder;
+
 import lombok.Data;
 
 @Data

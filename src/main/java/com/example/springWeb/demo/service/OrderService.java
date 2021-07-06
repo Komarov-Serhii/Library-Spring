@@ -1,10 +1,8 @@
 package com.example.springWeb.demo.service;
 
-import com.example.springWeb.demo.controller.UserController;
 import com.example.springWeb.demo.dto.OrderDTO;
 import com.example.springWeb.demo.model.Book;
 import com.example.springWeb.demo.model.Order;
-import com.example.springWeb.demo.model.Role;
 import com.example.springWeb.demo.model.User;
 import com.example.springWeb.demo.repository.BookRepository;
 import com.example.springWeb.demo.repository.OrderRepository;
@@ -12,14 +10,13 @@ import com.example.springWeb.demo.repository.UserRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -37,7 +34,12 @@ public class OrderService {
     private Logger logger = Logger.getLogger(OrderService.class);
 
     public List<OrderDTO> getAllOrder() {
-        return parsingOrder(orderRepository.findAll());
+        return parsingOrder(orderRepository.findAllByStatusIsFalse());
+    }
+
+    public boolean deleteOrder(long id) {
+        orderRepository.deleteById(id);
+        return true;
     }
 
     @Transactional
@@ -58,7 +60,37 @@ public class OrderService {
         return true;
     }
 
+    public Order getOrderById(long id) {
+        return orderRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Order not found"));
+    }
+
+//    public Order getOrderByUser(long id) {
+//        return orderRepository.findByUser_id(id);
+//    }
+
+    public boolean acceptOrder(long id, long book_id) {
+        Order order = orderRepository.findByUser_IdAndBook_Id(id,book_id);
+        logger.info(order);
+        order.setStatus(true);
+        order.setDate(Date.valueOf(LocalDate.now().plusDays(31)));
+        logger.info(order);
+        orderRepository.save(order);
+        return true;
+    }
+
+    public boolean rejectOrder(long id, long book_id) {
+        Order order = orderRepository.findByUser_IdAndBook_Id(id,book_id);
+        orderRepository.deleteById(order.getId());
+        Book book = bookRepository.getById(order.getBook().getId());
+        book.setActive(true);
+        bookRepository.save(book);
+        return true;
+    }
+
+
+
     private List<OrderDTO> parsingOrder(List<Order> order) {
+        logger.info(order.size());
         List<OrderDTO> orderDTOS = new ArrayList<>();
         for (Order ord : order) {
             OrderDTO orderDTO = new OrderDTO();

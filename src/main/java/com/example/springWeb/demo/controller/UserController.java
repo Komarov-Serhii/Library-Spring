@@ -1,10 +1,14 @@
 package com.example.springWeb.demo.controller;
 
 import com.example.springWeb.demo.dto.BookDTO;
+import com.example.springWeb.demo.dto.InfoUserDTO;
+import com.example.springWeb.demo.model.User;
 import com.example.springWeb.demo.service.BookService;
 import com.example.springWeb.demo.service.OrderService;
+import com.example.springWeb.demo.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +27,9 @@ public class UserController {
 
     @Autowired
     BookService bookService;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     OrderService orderService;
@@ -58,11 +65,20 @@ public class UserController {
     @PostMapping("/order")
     public String order(@RequestParam(name = "id") Long id, Model model) {
         orderService.saveOrder(id);
+        List<BookDTO> books =  bookService.getAllBooksByFree();
+        model.addAttribute("allBooks", books);
         return "user/userPage";
     }
 
     @GetMapping("/userInfo")
-    public String userInfo() {
+    public String userInfo(Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long id_user = ((User)principal).getId();
+        InfoUserDTO infoUserDTO = userService.countInfoUserDTO(id_user);
+
+        model.addAttribute("books", infoUserDTO.getContBook());
+        model.addAttribute("orders", infoUserDTO.getContOrder());
+        model.addAttribute("debt", infoUserDTO.getContDebt());
         return "user/userInfo" ;
     }
 }

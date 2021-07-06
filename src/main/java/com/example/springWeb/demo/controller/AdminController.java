@@ -5,6 +5,8 @@ import com.example.springWeb.demo.dto.InfoBookAndUserDTO;
 import com.example.springWeb.demo.dto.OrderDTO;
 import com.example.springWeb.demo.dto.UserDTO;
 import com.example.springWeb.demo.model.Book;
+import com.example.springWeb.demo.model.Order;
+import com.example.springWeb.demo.model.User;
 import com.example.springWeb.demo.service.BookService;
 import com.example.springWeb.demo.service.OrderService;
 import com.example.springWeb.demo.service.UserService;
@@ -89,6 +91,24 @@ public class AdminController {
     public String block(@RequestParam(name = "id") Long id,@RequestParam(name = "active") boolean active, Model model) {
         logger.info(id);
         logger.info(active);
+
+        userService.changeActive(id, active);
+
+        List<UserDTO> userDTOS = userService.getAllReaders();
+        model.addAttribute("people", userDTOS);
+        return "admin/listUser";
+    }
+
+    @PostMapping("/listUser/checkBook")
+    public String checkBook(@RequestParam(name = "id") Long id, Model model) {
+        //List<BookDTO> list = bookService.listBookByUser(id);
+
+        model.addAttribute("win", true);
+
+//        if (list.isEmpty()) {
+//
+//        }
+
         List<UserDTO> userDTOS = userService.getAllReaders();
         model.addAttribute("people", userDTOS);
         return "admin/listUser";
@@ -96,6 +116,24 @@ public class AdminController {
 
     @GetMapping("/order")
     public String order(Model model) {
+        List<OrderDTO> orderDTOS = orderService.getAllOrder();
+        model.addAttribute("order", orderDTOS);
+        return "admin/order";
+    }
+
+    @PostMapping("/order/accept")
+    public String accept(@RequestParam(name = "id") Long id,@RequestParam(name = "id_book") Long id_book, Model model) {
+        orderService.acceptOrder(id, id_book);
+
+        List<OrderDTO> orderDTOS = orderService.getAllOrder();
+        model.addAttribute("order", orderDTOS);
+        return "admin/order";
+    }
+
+    @PostMapping("/order/reject")
+    public String reject(@RequestParam(name = "id") Long id, @RequestParam(name = "id_book") Long id_book, Model model) {
+        orderService.rejectOrder(id,id_book);
+
         List<OrderDTO> orderDTOS = orderService.getAllOrder();
         model.addAttribute("order", orderDTOS);
         return "admin/order";

@@ -2,7 +2,9 @@ package com.example.springWeb.demo.service;
 
 import com.example.springWeb.demo.dto.BookDTO;
 import com.example.springWeb.demo.model.Book;
+import com.example.springWeb.demo.model.Order;
 import com.example.springWeb.demo.repository.BookRepository;
+import com.example.springWeb.demo.repository.OrderRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ public class BookService {
 
     @Autowired
     BookRepository bookRepository;
+
+    @Autowired
+    OrderRepository orderRepository;
 
     private Logger logger = Logger.getLogger(BookService.class);
 
@@ -95,6 +100,12 @@ public class BookService {
         list.sort(new BookDTO.AuthorComparator());
         return list;
     }
+
+//    public List<BookDTO> listBookByUser(Long id) {
+//        List<Order> order = orderRepository.findAllByUser(id);
+//
+//        return null;
+//    }
 
     private List<BookDTO> parsingBookInBookDTO(List<Book> list) {
         List<BookDTO> bookDTOs = new ArrayList<>();

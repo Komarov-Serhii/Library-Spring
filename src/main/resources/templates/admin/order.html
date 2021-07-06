@@ -54,7 +54,6 @@
                 <th>author</th>
                 <th>accept</th>
                 <th>reject</th>
-
               </tr>
               </thead>
               <tbody>
@@ -65,14 +64,20 @@
                 <td th:text="${ord.id_book}"></td>
                 <td th:text="${ord.name_book}"></td>
                 <td th:text="${ord.author}"></td>
+                <form action="/mainAdmin/order/accept" method="post">
                   <td>
-                    <a href="${pageContext.request.contextPath}/view/admin/orderPage?id=${a.key.id}&button=accept"
-                       onclick="return confirm('acceptConfirm')">accept</a>
+                    <button type="submit" onclick="return confirm('acceptConfirm')" >accept</button>
+                    <input type="hidden" name="id" value="id" th:attr="value=${ord.id_user}"/>
+                    <input type="hidden" name="id_book" value="id_book" th:attr="value=${ord.id_book}"/>
                   </td>
+                </form>
+                <form action="/mainAdmin/order/reject" method="post">
                   <td>
-                    <a href="${pageContext.request.contextPath}/view/admin/orderPage?id=${a.key.id}&button=reject"
-                       onclick="return confirm('rejectConfirm')">reject</a>
+                  <button type="submit" onclick="return confirm('rejectConfirm')" >reject</button>
+                  <input type="hidden" name="id" value="id" th:attr="value=${ord.id_user}"/>
+                  <input type="hidden" name="id_book" value="id_book" th:attr="value=${ord.id_book}"/>
                   </td>
+                </form>
                 </tr>
               </tbody>
             </table>

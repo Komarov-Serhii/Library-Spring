@@ -74,7 +74,6 @@
 
           <div class="plansBlock">
             <table class="tableService sortable">
-              <form action="/mainAdmin/listUser/block" method="post">
               <thead>
               <tr>
                 <th>#</th>
@@ -90,23 +89,28 @@
                   <td th:text="${items.id}"></td>
                   <td th:text="${items.name}"></td>
                   <td th:text="${items.email}"></td>
+                  <form action="/mainAdmin/listUser/block" method="post">
                     <td th:if="${items.active == true}">
-                      <input type="submit" name="id" value="id" th:attr="value=${items.id}"
-                             th:attr="value=${items.active}"
-                             onclick="return confirm('blockPersonConfirm')"/>
+                      <button type="submit" onclick="return confirm('blockPersonConfirm')">Block</button>
+                      <input type="hidden" name="id" value="id" th:attr="value=${items.id}"/>
+                      <input type="hidden" name="active" value="active" th:attr="value=${items.active}"/>
                     </td>
+                  </form>
+                  <form action="/mainAdmin/listUser/block" method="post">
                     <td th:if="${items.active == false}">
-                      <input type="submit" name="id" value="id" th:attr="value=${items.id}"
-                             th:attr="value=${items.active}"
-                             onclick="return confirm('unblockPersonConfirm')"/>
+                      <button type="submit" onclick="return confirm('blockPersonConfirm')">Unblock</button>
+                      <input type="hidden" name="id" value="id" th:attr="value=${items.id}"/>
+                      <input type="hidden" name="active" value="active" th:attr="value=${items.active}"/>
                     </td>
+                  </form>
+                  <form action="/mainAdmin/listUser/checkBook" method="post">
                   <td>
-                    <a href="${pageContext.request.contextPath}/view/admin/listPerson?id=${a.id}&button=book">
-                      checkBooks</a></td>
-
+                    <button type="submit">Check book</button>
+                    <input type="hidden" name="id" value="id" th:attr="value=${items.id}"/>
+                  </td>
+                  </form>
                 </tr>
               </tbody>
-              </form>
             </table>
           </div>
         </div>

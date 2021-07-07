@@ -196,6 +196,37 @@ public class UserService implements UserDetailsService {
         return list;
     }
 
+    public UserForProfileDTO infoForProfile(long id) {
+        User user = userRepository.getById(id);
+        return UserForProfileDTO.builder()
+                .name(user.getName())
+                .email(user.getUsername())
+                .build();
+    }
+
+    public boolean editProfile(long id, UserForProfileDTO userForm) {
+        User user = userRepository.getById(id);
+
+        logger.info(user);
+        user.setName(userForm.getName());
+        user.setUsername(userForm.getEmail());
+
+        if (passwordVerify(user, userForm.getOldPassword())) {
+            user.setPassword(bCryptPasswordEncoder.encode(userForm.getNewPassword()));
+        } else {
+            return false;
+        }
+        logger.info(user);
+        userRepository.save(user);
+
+        return true;
+    }
+
+
+    public boolean passwordVerify(User user, String pass) {
+        return bCryptPasswordEncoder.matches(pass, user.getPassword());
+    }
+
 
 
     private List<UserDTO> parsingUserInUserDTO(List<User> list) {

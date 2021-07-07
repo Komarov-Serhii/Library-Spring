@@ -17,6 +17,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     Optional<Order> findByBook_id(long id);
 
+    List<Order> findAllByUser_idAndStatusIsTrue(long id);
+
     Order findByUser_IdAndBook_Id(long user_id, long book_id);
 
     List<Order> findAllByStatusIsFalse();

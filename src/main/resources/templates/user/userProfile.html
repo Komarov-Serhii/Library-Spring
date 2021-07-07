@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+
+<meta charset="utf-8">
+
+<head>
+  <title>Profile</title>
+
+  <link rel="stylesheet" th:href="@{/style.css}"/>
+
+</head>
+
+<body style="zoom: 90%" >
+<div id="home"></div>
+<div class="ournet-inter-area">
+  <header id="header" class="header-area">
+    <div class="logoBlock">
+      <div style="font-size: 16px; text-align: end;">
+        <a class="btn" href="${pageContext.request.contextPath}/view/language/personProfile?language=RU">RU</a>
+        <a class="btn" href="${pageContext.request.contextPath}/view/language/personProfile?language=EN">EN</a>
+      </div>
+      <p id="pageLogo">myLibrary</p>
+      <div class="adminmenu">
+        <ul>
+          <li><a class="scroll-animite btn"
+                 href="/userPage">personPage</a>
+          </li>
+          <li><a class="scroll-animite logOutBtn"
+                 href="/logout">logout</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="time"><span id="datetime"></span></div>
+  </header>
+  <!-- Slider area Start -->
+  <div class="slider-area">
+    <div class="slider-bg text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="slidertext">
+              <h1>myProfile</h1>
+            </div>
+          </div>
+          <div class="plansBlockProfile">
+
+            <div class="serviceBlock">
+              <table class="tableService sortable">
+                <thead>
+                <tr>
+                  <th>name</th>
+                  <th>Email</th>
+                  <th>password</th>
+                  <th>edit</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="items: ${user}" class="highlight">
+                  <td th:text="${items.name}"></td>
+                  <td th:text="${items.email}"></td>
+                  <td> ****</td>
+                  <form action="/userPage/userProfile/edit" method="post">
+                    <td>
+                      <button type="submit" onclick="return confirm('editPersonConfirm')">edit</button>
+                    </td>
+                  </form>
+                </tr>
+                </tbody>
+              </table>
+              <p th:if="${wrongData}">incorrectEmailOrPass</p>
+            </div>
+              <div class="serviceBlock"  th:if="${tab}">
+                <p>edit</p>
+                <form method="post" th:object="${userForm}" action="/userPage/userProfile/update">
+                <p>
+                  <label>
+                    <input class="tariff1" th:field="*{name}" required placeholder="Name">
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input class="tariff1" th:field="*{email}" required placeholder="Email">
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    <input class="tariff1" th:field="*{oldPassword}" required placeholder="Old password">
+                  </label>
+                </p>
+
+                  <p>
+                  <label>
+                    <input class="tariff1" th:field="*{newPassword}" required placeholder="New password">
+                  </label>
+                </p>
+                  <button type="submit" th:text="Submit" onclick="return confirm('updateProfile')" >update</button>
+                </form>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

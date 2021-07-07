@@ -3,6 +3,7 @@ package com.example.springWeb.demo.controller;
 import com.example.springWeb.demo.dto.BookByUserDTO;
 import com.example.springWeb.demo.dto.BookDTO;
 import com.example.springWeb.demo.dto.InfoUserDTO;
+import com.example.springWeb.demo.dto.UserForProfileDTO;
 import com.example.springWeb.demo.model.User;
 import com.example.springWeb.demo.service.BookService;
 import com.example.springWeb.demo.service.OrderService;
@@ -12,11 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -121,7 +120,7 @@ public class UserController {
         Long id_user = ((User)principal).getId();
         List<BookDTO> bookDTOS = userService.orderByUser(id_user);
         model.addAttribute("orders", bookDTOS);
-        return "user/userOrder" ;
+        return "user/userOrder";
     }
 
     @PostMapping("/userOrder/decline")
@@ -134,5 +133,44 @@ public class UserController {
         List<BookDTO> bookDTOS = userService.orderByUser(id_user);
         model.addAttribute("orders", bookDTOS);
         return "user/userBook";
+    }
+
+    @GetMapping("/userProfile")
+    public String userProfile(Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long id_user = ((User)principal).getId();
+
+        UserForProfileDTO userForProfileDTO = userService.infoForProfile(id_user);
+        model.addAttribute("user", userForProfileDTO);
+        return "user/userProfile" ;
+    }
+
+
+    @PostMapping("/userProfile/edit")
+    public String edit( Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long id_user = ((User)principal).getId();
+
+
+        UserForProfileDTO userForProfileDTO = userService.infoForProfile(id_user);
+        model.addAttribute("tab", true);
+        model.addAttribute("userForm", userForProfileDTO);
+        model.addAttribute("user", userForProfileDTO);
+        return "user/userProfile";
+    }
+
+    @PostMapping("/userProfile/update")
+    public String update(@ModelAttribute("userForm") @Valid UserForProfileDTO userForm, Model model) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long id_user = ((User)principal).getId();
+
+        if (!userService.editProfile(id_user, userForm)) {
+            model.addAttribute("wrongData", true);
+        }
+
+        logger.info(userForm);
+        UserForProfileDTO userForProfileDTO = userService.infoForProfile(id_user);
+        model.addAttribute("user", userForProfileDTO);
+        return "user/userProfile";
     }
 }

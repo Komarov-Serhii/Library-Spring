@@ -3,15 +3,21 @@ package com.example.springWeb.demo.service;
 import com.example.springWeb.demo.dto.BookDTO;
 import com.example.springWeb.demo.model.Book;
 import com.example.springWeb.demo.model.Order;
+import com.example.springWeb.demo.model.User;
 import com.example.springWeb.demo.repository.BookRepository;
 import com.example.springWeb.demo.repository.OrderRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,7 +49,10 @@ public class BookService {
 
 
     public List<BookDTO> getAllBooksByFree() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long id_user = ((User)principal).getId();
         List<Book> bookList = bookRepository.findAllByActiveTrue();
+        checkDebtInBookByUser(id_user);
         return parsingBookInBookDTO(bookList);
     }
 
@@ -106,6 +115,20 @@ public class BookService {
 //
 //        return null;
 //    }
+
+
+    public void checkDebtInBookByUser(long id) {
+        List<Order> orders = orderRepository.findAllByUser_idAndStatusIsTrue(id);
+        if (!orders.isEmpty()) {
+            orders.stream()
+                    .filter(o -> LocalDate.now().isAfter(Instant.ofEpochMilli(o.getDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate()))
+                    .forEach(o -> o.setDebt(o.getBook().getDetails().getPrice() / 100 * 30));
+            for (Order order : orders) {
+                orderRepository.save(order);
+            }
+        }
+    }
+
 
     private List<BookDTO> parsingBookInBookDTO(List<Book> list) {
         List<BookDTO> bookDTOs = new ArrayList<>();

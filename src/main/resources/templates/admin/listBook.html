@@ -4,7 +4,7 @@
 
 <meta charset="utf-8">
 <head>
-    <title>List of Books</title>
+    <title th:text="#{lang.listBooks}"></title>
 
     <link rel="stylesheet" th:href="@{/style.css}"/>
 
@@ -16,27 +16,26 @@
     <header id="header" class="header-area">
         <div class="logoBlock">
             <div style="font-size: 16px; text-align: end;">
-                <a class="btn" href="${pageContext.request.contextPath}/view/language/mainPage?language=RU">RU</a>
-                <a class="btn" href="${pageContext.request.contextPath}/view/language/mainPage?language=EN">EN</a>
+                <a class="loginBtn" th:href="@{/mainAdmin/listBook(lang='ru')}">RU</a>
+                <a class="loginBtn" th:href="@{/mainAdmin/listBook(lang='en')}">EN</a>
             </div>
-            <p id="pageLogo">myLibrary</p>
+            <p id="pageLogo" th:text="#{lang.myLibrary}"></p>
             <div class="searchFormDiv">
                 <form class="searchForm" method="post"
                       action="/mainAdmin/listBook/search" >
                     <p>
                         <label>
-                            <input class="searchField" type="search" required
-                                   placeholder="searchSite"
+                            <input class="searchField" type="search"  th:value="#{lang.searchSite}"
                                    name="search">
                         </label>
                     </p>
                     <div>
                         <input class="searchBtn" type="submit"
-                               value="search" name="sear">
+                               th:value="#{lang.search}" name="sear">
                     </div>
 
                     <div class="notFoundMessage" th:if="${notFoundSearch}">
-                        <p>notFoundSearch</p>
+                        <p th:text="#{lang.notFoundSearch}" ></p>
                     </div>
 
                 </form>
@@ -44,9 +43,9 @@
             <div class="mainmenu">
                 <ul>
                     <li><a class="scroll-animite btn"
-                           href="/mainAdmin">admin</a></li>
+                           href="/mainAdmin" th:text="#{lang.admin}"></a></li>
                     <li><a class="scroll-animite logOutBtn"
-                           href="/logout">logout</a></li>
+                           href="/logout" th:text="#{lang.logout}" ></a></li>
                 </ul>
             </div>
         </div>
@@ -60,12 +59,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="slidertext">
-                            <h1>listBooks</h1>
+                            <h1 th:text="#{lang.listBooks}"></h1>
                             <div class="addBookBtn">
                                 <a class="addBut"
                                    href="/mainAdmin/listBook/addSubmit"
-                                   onclick="return confirm('addBookConfirm')">Add Book
-                                </a>
+                                   onclick="return confirm('addBookConfirm')" th:text="#{lang.addBook}" ></a>
                             </div>
                         </div>
                     </div>
@@ -119,15 +117,15 @@
                                                 <form action="/mainAdmin/listBook/delete" method="post">
                                                 <thead>
                                                 <tr>
-                                                    <th>name</th>
-                                                    <th>author</th>
-                                                    <th>genre</th>
-                                                    <th>publisher</th>
-                                                    <th>publisherDate</th>
-                                                    <th>description</th>
-                                                    <th>price</th>
-                                                    <th>delete</th>
-                                                    <th>edit</th>
+                                                    <th th:text="#{lang.name}"></th>
+                                                    <th th:text="#{lang.author}"></th>
+                                                    <th th:text="#{lang.genre}"></th>
+                                                    <th th:text="#{lang.publisher}"></th>
+                                                    <th th:text="#{lang.publisherDate}"></th>
+                                                    <th th:text="#{lang.description}"></th>
+                                                    <th th:text="#{lang.price}"></th>
+                                                    <th th:text="#{lang.delete}"></th>
+                                                    <th th:text="#{lang.edit}"></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -141,13 +139,13 @@
                                                     <td th:text="${book.price}"></td>
                                                     <form action="/mainAdmin/listBook/delete" method="post">
                                                         <td>
-                                                            <button type="submit" onclick="return confirm('deleteBookConfirm')">delete</button>
+                                                            <button type="submit" onclick="return confirm('deleteBookConfirm')" th:text="#{lang.delete}" ></button>
                                                             <input type="hidden" name="id" value="id" th:attr="value=${book.id}"/>
                                                         </td>
                                                     </form>
                                                     <form action="/mainAdmin/listBook/edit" method="post">
                                                         <td>
-                                                            <button type="submit" onclick="return confirm('editBookConfirm')">edit</button>
+                                                            <button type="submit" onclick="return confirm('editBookConfirm')" th:text="#{lang.edit}"></button>
                                                             <input type="hidden" name="id" value="id" th:attr="value=${book.id}"/>
                                                         </td>
                                                     </form>
@@ -197,7 +195,7 @@
                                                         <input class="tariff1" th:field="*{price}" required placeholder="Price">
                                                     </label>
                                                 </p>
-                                                    <button type="submit" th:text="Submit" onclick="return confirm('editBookConfirm')" >update</button>
+                                                    <button type="submit" onclick="return confirm('editBookConfirm')" th:text="#{lang.update}" ></button>
                                                     <input type="hidden" th:field="*{id}" />
                                                 </form>
                                             </div>
@@ -207,15 +205,15 @@
                                             <table class="tableService sortable">
                                                 <thead>
                                                 <tr>
-                                                    <th>name</th>
-                                                    <th>author</th>
-                                                    <th>genre</th>
-                                                    <th>publisher</th>
-                                                    <th>publisherDate</th>
-                                                    <th>description</th>
-                                                    <th>price</th>
-                                                    <th>delete</th>
-                                                    <th>edit</th>
+                                                    <th th:text="#{lang.name}"></th>
+                                                    <th th:text="#{lang.author}"></th>
+                                                    <th th:text="#{lang.genre}"></th>
+                                                    <th th:text="#{lang.publisher}"></th>
+                                                    <th th:text="#{lang.publisherDate}"></th>
+                                                    <th th:text="#{lang.description}"></th>
+                                                    <th th:text="#{lang.price}"></th>
+                                                    <th th:text="#{lang.delete}"></th>
+                                                    <th th:text="#{lang.edit}"></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -229,13 +227,13 @@
                                                     <td th:text="${book.price}"></td>
                                                     <form action="/mainAdmin/listBook/delete" method="post">
                                                     <td>
-                                                        <button type="submit" onclick="return confirm('deleteBookConfirm')">delete</button>
+                                                        <button type="submit" onclick="return confirm('deleteBookConfirm')" th:text="#{lang.delete}"></button>
                                                         <input type="hidden" name="id" value="id" th:attr="value=${book.id}"/>
                                                     </td>
                                                     </form>
                                                     <form action="/mainAdmin/listBook/edit" method="post">
                                                     <td>
-                                                        <button type="submit" onclick="return confirm('editBookConfirm')">edit</button>
+                                                        <button type="submit" onclick="return confirm('editBookConfirm')" th:text="#{lang.edit}"></button>
                                                         <input type="hidden" name="id" value="id" th:attr="value=${book.id}"/>
                                                     </td>
                                                     </form>

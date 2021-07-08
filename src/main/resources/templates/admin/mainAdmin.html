@@ -4,7 +4,7 @@
 
 <meta charset="utf-8">
 <head>
-  <title>Admin: Main page/></title>
+  <title th:text="#{lang.admin}"></title>
 
   <link rel="stylesheet" th:href="@{/style.css}"/>
 
@@ -16,21 +16,21 @@
   <header id="header" class="header-area">
     <div class="logoBlock">
       <div style="font-size: 16px; text-align: end;">
-        <a class="btn" href="${pageContext.request.contextPath}/view/language/admin/adminPage?language=RU">RU</a>
-        <a class="btn" href="${pageContext.request.contextPath}/view/language/admin/adminPage?language=EN">EN</a>
+        <a class="loginBtn" th:href="@{/mainAdmin(lang='ru')}">RU</a>
+        <a class="loginBtn" th:href="@{/mainAdmin(lang='en')}">EN</a>
       </div>
       <p id="pageLogo">ISPAdmin</p>
       <div class="adminmenu">
         <ul>
           <li><a class="scroll-animite btn"
-                 href="/mainAdmin/listBook">books</a>
+                 href="/mainAdmin/listBook" th:text="#{lang.books}"></a>
           </li>
           <li><a class="scroll-animite btn"
-                 href="/mainAdmin/listUser">users</a></li>
+                 href="/mainAdmin/listUser" th:text="#{lang.users}" ></a></li>
           <li><a class="scroll-animite btn"
-                 href="/mainAdmin/order">orders</a></li>
+                 href="/mainAdmin/order" th:text="#{lang.orders}" ></a></li>
           <li><a class="scroll-animite logOutBtn"
-                 href="/logout">logout</a></li>
+                 href="/logout" th:text="#{lang.logout}" ></a></li>
         </ul>
       </div>
     </div>
@@ -44,7 +44,7 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="slidertext">
-              <h1>mainPage</h1>
+              <h1 th:text="#{lang.mainPage}" ></h1>
             </div>
           </div>
           <div class="userInfo">

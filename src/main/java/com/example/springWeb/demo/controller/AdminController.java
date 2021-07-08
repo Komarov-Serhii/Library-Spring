@@ -1,12 +1,6 @@
 package com.example.springWeb.demo.controller;
 
-import com.example.springWeb.demo.dto.BookDTO;
-import com.example.springWeb.demo.dto.InfoBookAndUserDTO;
-import com.example.springWeb.demo.dto.OrderDTO;
-import com.example.springWeb.demo.dto.UserDTO;
-import com.example.springWeb.demo.model.Book;
-import com.example.springWeb.demo.model.Order;
-import com.example.springWeb.demo.model.User;
+import com.example.springWeb.demo.dto.*;
 import com.example.springWeb.demo.service.BookService;
 import com.example.springWeb.demo.service.OrderService;
 import com.example.springWeb.demo.service.UserService;
@@ -14,13 +8,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("mainAdmin")
@@ -54,7 +44,6 @@ public class AdminController {
     public String listBook(Model model) {
         List<BookDTO> bookDTOS = bookService.getAllBooksByFree();
         model.addAttribute("books", bookDTOS);
-
         return "admin/listBook";
     }
 
@@ -88,10 +77,48 @@ public class AdminController {
         return "admin/listBook";
     }
 
+    @PostMapping("/listBook/edit")
+    public String edit(@RequestParam(name = "id") Long id, Model model) {
+        BookDTO bookDTO = bookService.bookForEdit(id);
+
+        model.addAttribute("win", true);
+        model.addAttribute("bookForm", bookDTO);
+
+        List<BookDTO> bookDTOS = bookService.getAllBooksByFree();
+        model.addAttribute("books", bookDTOS);
+        return "admin/listBook";
+    }
+
+    @PostMapping("/listBook/update")
+    public String update(@ModelAttribute("bookForm") BookDTO bookForm, Model model) {
+        bookService.editBook(bookForm);
+        List<BookDTO> bookDTOS = bookService.getAllBooksByFree();
+        model.addAttribute("books", bookDTOS);
+        return "admin/listBook";
+    }
+
+    @GetMapping("/listBook/addSubmit")
+    public String addSubmit(Model model) {
+        model.addAttribute("win1", true);
+        model.addAttribute("newBookForm", new BookDTO());
+        List<BookDTO> bookDTOS = bookService.getAllBooksByFree();
+        model.addAttribute("books", bookDTOS);
+        return "admin/listBook";
+    }
+
+    @PostMapping("/listBook/add")
+    public String add(@ModelAttribute("bookForm") BookDTO bookForm, Model model) {
+        bookService.addBook(bookForm);
+        List<BookDTO> bookDTOS = bookService.getAllBooksByFree();
+        model.addAttribute("books", bookDTOS);
+        return "admin/listBook";
+    }
+
     @PostMapping("/listUser/block")
     public String block(@RequestParam(name = "id") Long id,@RequestParam(name = "active") boolean active, Model model) {
         logger.info(id);
         logger.info(active);
+
 
         userService.changeActive(id, active);
 
@@ -102,17 +129,15 @@ public class AdminController {
 
     @PostMapping("/listUser/checkBook")
     public String checkBook(@RequestParam(name = "id") Long id, Model model) {
-
-        Optional<Order> order = orderService.getOrderByBookId(id);
-        List<BookDTO> list = userService.bookByUserForAdmin(order.get().getUser().getId());
+        List<BookDTO> list = userService.bookByUserForAdmin(id);
         model.addAttribute("win", true);
         if (list.isEmpty()) {
             model.addAttribute("notBooks", true);
         } else {
-            model.addAttribute("notBooks", false);
+            model.addAttribute("list", true);
+            model.addAttribute("books", list);
         }
 
-        model.addAttribute("books", list);
 
         List<UserDTO> userDTOS = userService.getAllReaders();
         model.addAttribute("people", userDTOS);

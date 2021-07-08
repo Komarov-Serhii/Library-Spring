@@ -36,14 +36,17 @@ public class UserController {
 
     @GetMapping
     public String showCheck(Model model) {
-        List<BookDTO> books =  bookService.getAllBooksByFree();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long id_user = ((User)principal).getId();
+        logger.info(id_user);
+        List<BookDTO> books = bookService.getAllBooksByFreeAndCheckDebt(id_user);
         model.addAttribute("allBooks", books);
         return "user/userPage";
     }
 
     @GetMapping("/sort")
     public String sort(@RequestParam("sort") String sort, Model model) {
-        model.addAttribute("allBooks",  bookService.sort(sort));
+        model.addAttribute("allBooks", bookService.sort(sort));
         return "user/userPage";
     }
 
@@ -57,7 +60,7 @@ public class UserController {
             model.addAttribute("notFoundSearchInUserPage", true);
         }
 
-        List<BookDTO> list =  bookService.getAllBooksByFree();
+        List<BookDTO> list = bookService.getAllBooksByFree();
         model.addAttribute("allBooks", list);
         return "user/userPage";
     }
@@ -65,7 +68,7 @@ public class UserController {
     @PostMapping("/order")
     public String order(@RequestParam(name = "id") Long id, Model model) {
         orderService.saveOrder(id);
-        List<BookDTO> books =  bookService.getAllBooksByFree();
+        List<BookDTO> books = bookService.getAllBooksByFree();
         model.addAttribute("allBooks", books);
         return "user/userPage";
     }
@@ -73,29 +76,29 @@ public class UserController {
     @GetMapping("/userInfo")
     public String userInfo(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long id_user = ((User)principal).getId();
+        Long id_user = ((User) principal).getId();
         InfoUserDTO infoUserDTO = userService.countInfoUserDTO(id_user);
 
         model.addAttribute("books", infoUserDTO.getContBook());
         model.addAttribute("orders", infoUserDTO.getContOrder());
         model.addAttribute("debt", infoUserDTO.getContDebt());
-        return "user/userInfo" ;
+        return "user/userInfo";
     }
 
     @GetMapping("/userBook")
     public String userBook(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long id_user = ((User)principal).getId();
+        Long id_user = ((User) principal).getId();
         List<BookByUserDTO> bookByUserDTO = userService.bookByUser(id_user);
         model.addAttribute("books", bookByUserDTO);
-        return "user/userBook" ;
+        return "user/userBook";
     }
 
     @PostMapping("/userBook/return")
     public String returnBook(@RequestParam(name = "id") Long id, Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long id_user = ((User)principal).getId();
-        orderService.returnOrder(id_user,id);
+        Long id_user = ((User) principal).getId();
+        orderService.returnOrder(id_user, id);
 
         List<BookByUserDTO> bookByUserDTO = userService.bookByUser(id_user);
         model.addAttribute("books", bookByUserDTO);
@@ -105,8 +108,8 @@ public class UserController {
     @PostMapping("/userBook/pay")
     public String pay(@RequestParam(name = "id") Long id, Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long id_user = ((User)principal).getId();
-        orderService.payOrder(id_user,id);
+        Long id_user = ((User) principal).getId();
+        orderService.payOrder(id_user, id);
 
 
         List<BookByUserDTO> bookByUserDTO = userService.bookByUser(id_user);
@@ -117,7 +120,7 @@ public class UserController {
     @GetMapping("/userOrder")
     public String userOrder(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long id_user = ((User)principal).getId();
+        Long id_user = ((User) principal).getId();
         List<BookDTO> bookDTOS = userService.orderByUser(id_user);
         model.addAttribute("orders", bookDTOS);
         return "user/userOrder";
@@ -126,8 +129,8 @@ public class UserController {
     @PostMapping("/userOrder/decline")
     public String decline(@RequestParam(name = "id") Long id, Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long id_user = ((User)principal).getId();
-        orderService.declineOrder(id_user,id);
+        Long id_user = ((User) principal).getId();
+        orderService.declineOrder(id_user, id);
 
 
         List<BookDTO> bookDTOS = userService.orderByUser(id_user);
@@ -138,18 +141,18 @@ public class UserController {
     @GetMapping("/userProfile")
     public String userProfile(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long id_user = ((User)principal).getId();
+        Long id_user = ((User) principal).getId();
 
         UserForProfileDTO userForProfileDTO = userService.infoForProfile(id_user);
         model.addAttribute("user", userForProfileDTO);
-        return "user/userProfile" ;
+        return "user/userProfile";
     }
 
 
     @PostMapping("/userProfile/edit")
-    public String edit( Model model) {
+    public String edit(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long id_user = ((User)principal).getId();
+        Long id_user = ((User) principal).getId();
 
 
         UserForProfileDTO userForProfileDTO = userService.infoForProfile(id_user);
@@ -162,7 +165,7 @@ public class UserController {
     @PostMapping("/userProfile/update")
     public String update(@ModelAttribute("userForm") @Valid UserForProfileDTO userForm, Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long id_user = ((User)principal).getId();
+        Long id_user = ((User) principal).getId();
 
         if (!userService.editProfile(id_user, userForm)) {
             model.addAttribute("wrongData", true);

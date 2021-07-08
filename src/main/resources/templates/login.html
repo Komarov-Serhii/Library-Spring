@@ -6,8 +6,9 @@
 
 <meta charset="utf-8">
 <head>
+    <title th:text="#{lang.login}"></title>
     <title>login</title>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
    <link rel="stylesheet" th:href="@{/style.css}"/>
 
 <body>
@@ -17,24 +18,20 @@
         <div class="container">
             <div class="row">
                 <div class="slidertext">
-                    <h3>login</h3>
+                    <h3 th:text="#{lang.login}"></h3>
                 </div>
                 <div class="tableTariffs">
                     <div class="localRegistrationBlock">
-                        <a class="loginBtn" href="/mainPage">mainPage</a>
-                        <a class="loginBtn" href="${pageContext.request.contextPath}/view/language/login?language=RU">
-                            RU
-                        </a>
-                        <a class="loginBtn" href="${pageContext.request.contextPath}/view/language/login?language=EN">
-                            EN
-                        </a>
+                        <a class="loginBtn" href="/mainPage" th:text="#{lang.mainPage}"></a>
+                        <a class="loginBtn" th:href="@{/login(lang='ru')}">RU</a>
+                        <a class="loginBtn" th:href="@{/login(lang='en')}">EN</a>
                     </div>
                     <form class="w3-container" align="center" method="post"
                           action="/login" >
                         <p>
                             <label>
                                 <input class="profileEditorFields loginField" type="text" required
-                                       placeholder="Username" name="username" autofocus="true">
+                                       placeholder="Login" name="username" autofocus="true">
                             </label>
                         </p>
 
@@ -48,7 +45,7 @@
 
                         <div>
                             <input class="btn editProfileBtn" id="loginSubmitBtn" type="submit"
-                                   value="login"/>
+                                   th:value="#{lang.enter}"/>
                         </div>
 
 <!--                        <div th:if="${requestScope.notFound}">-->
@@ -79,7 +76,7 @@
             </div>
         </div>
         <div class="registerBlock">
-            <a class="loginBtn reg" href="/registration">registration</a>
+            <a class="loginBtn reg" href="/registration" th:text="#{lang.registration}"></a>
         </div>
     </div>
 </div>

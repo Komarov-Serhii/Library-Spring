@@ -63,71 +63,55 @@
                             <h1>listBooks</h1>
                             <div class="addBookBtn">
                                 <a class="addBut"
-                                   href="${pageContext.request.contextPath}/view/admin/listBook?button=add"
-                                   onclick="return confirm('removeBookConfirm')">Add Book</a>
+                                   href="/mainAdmin/listBook/addSubmit"
+                                   onclick="return confirm('addBookConfirm')">Add Book
+                                </a>
                             </div>
                         </div>
                     </div>
 
 
-<!--                                            <div class="newTariff" th:if="${win1}">-->
-<!--                                                <form method="post"-->
-<!--                                                      action="/mainAdmin/listBook?param=${param.get('param')}&id=${param.get("id")}&button=addSubmit">-->
-<!--                                                <p>-->
-<!--                                                    <label>-->
-<!--                                                        <input class="tariff1" type="text" value="${param.get("name")}" required-->
-<!--                                                        placeholder="<fmt:message key="name"/>"-->
-<!--                                                        name="name">-->
-<!--                                                    </label>-->
-<!--                                                </p>-->
-<!--                                                <p>-->
-<!--                                                    <label>-->
-<!--                                                        <input class="tariff1" type="text" value="${param.get("author")}" required-->
-<!--                                                        placeholder="<fmt:message key="author"/>"-->
-<!--                                                        name="author">-->
-<!--                                                    </label>-->
-<!--                                                </p>-->
-<!--                                                <p>-->
-<!--                                                    <label>-->
-<!--                                                        <input class="tariff1" type="text" value="${param.get("genre")}" required-->
-<!--                                                        placeholder="<fmt:message key="genre"/>"-->
-<!--                                                        name="genre">-->
-<!--                                                    </label>-->
-<!--                                                </p>-->
-<!--                                                <p>-->
-<!--                                                    <label>-->
-<!--                                                        <input class="tariff1" type="text" value="${param.get("publisher")}" required-->
-<!--                                                        placeholder="<fmt:message key="publisher"/>"-->
-<!--                                                        name="publisher">-->
-<!--                                                    </label>-->
-<!--                                                </p>-->
+                                            <div class="newTariff" th:if="${win1}">
+                                                <form method="post" th:object="${newBookForm}" action="/mainAdmin/listBook/add">
+                                                <p>
+                                                    <label>
+                                                        <input class="tariff1" th:field="*{name}" required placeholder="Name">
+                                                    </label>
+                                                </p>
+                                                <p>
+                                                    <label>
+                                                        <input class="tariff1" th:field="*{author}" required placeholder="Author">
+                                                    </label>
+                                                </p>
+                                                <p>
+                                                    <label>
+                                                        <input class="tariff1" th:field="*{genre}" required placeholder="Genre">
+                                                    </label>
+                                                </p>
+                                                <p>
+                                                    <label>
+                                                        <input class="tariff1" th:field="*{publisher}" required placeholder="Publisher">
+                                                    </label>
+                                                </p>
 
-<!--                                                <p>-->
-<!--                                                    <label>-->
-<!--                                                        <input class="tariff1" type="text" value="${param.get("publisherDate")}" required-->
-<!--                                                        placeholder="<fmt:message key="publisherDate"/>"-->
-<!--                                                        name="publisherDate">-->
-<!--                                                    </label>-->
-<!--                                                </p>-->
-<!--                                                <p>-->
-<!--                                                    <label>-->
-<!--                                                        <input class="tariff1" type="text" value="${param.get("description")}" required-->
-<!--                                                        placeholder="<fmt:message key="description"/>"-->
-<!--                                                        name="description">-->
-<!--                                                    </label>-->
-<!--                                                </p>-->
-<!--                                                <p>-->
-<!--                                                    <label>-->
-<!--                                                        <input class="tariff1" type="text" value="${param.get("price")}" required-->
-<!--                                                        placeholder="<fmt:message key="price"/>"-->
-<!--                                                        name="price">-->
-<!--                                                    </label>-->
-<!--                                                </p>-->
-<!--                                                <input class="submitBtn" type="submit"-->
-<!--                                                       onclick="return confirm('<fmt:message key="addBookConfirm"/>')"-->
-<!--                                                value="<fmt:message key="add"/>">-->
-<!--                                                </form>-->
-<!--                                            </div>-->
+                                                <p>
+                                                    <label>
+                                                        <input class="tariff1" th:field="*{publisherDate}" required placeholder="Publisher Date">
+                                                    </label>
+                                                </p>
+                                                <p>
+                                                    <label>
+                                                        <input class="tariff1" th:field="*{description}" required placeholder="Description">
+                                                    </label>
+                                                </p>
+                                                <p>
+                                                    <label>
+                                                        <input class="tariff1" th:field="*{price}" required placeholder="Price">
+                                                    </label>
+                                                </p>
+                                                    <button type="submit" onclick="return confirm('addBookConfirm')">add</button>
+                                                </form>
+                                            </div>
 
 
                                         <div class="serviceBlock" th:if="${window}">
@@ -155,14 +139,18 @@
                                                     <td th:text="${book.publisherDate}"></td>
                                                     <td th:text="${book.description}"></td>
                                                     <td th:text="${book.price}"></td>
-                                                    <td>
-                                                        <input type="submit" name="id" value="id" th:attr="value=${book.id}"
-                                                               onclick="return confirm('orderBookConfirm')"/>
-                                                    </td>
-                                                    <td>
-                                                        <a class="updateButton"
-                                                           href="${pageContext.request.contextPath}/view/admin/listBook?id=${a.id}&name=${a.name}&author=${a.author}&genre=${a.genre}&publisher=${a.publisher}&publisherDate=${a.publisherDate}&description=${a.description}&price=${a.price}&button=set">edit</a>
-                                                    </td>
+                                                    <form action="/mainAdmin/listBook/delete" method="post">
+                                                        <td>
+                                                            <button type="submit" onclick="return confirm('deleteBookConfirm')">delete</button>
+                                                            <input type="hidden" name="id" value="id" th:attr="value=${book.id}"/>
+                                                        </td>
+                                                    </form>
+                                                    <form action="/mainAdmin/listBook/edit" method="post">
+                                                        <td>
+                                                            <button type="submit" onclick="return confirm('editBookConfirm')">edit</button>
+                                                            <input type="hidden" name="id" value="id" th:attr="value=${book.id}"/>
+                                                        </td>
+                                                    </form>
                                                 </tr>
                                                 </tbody>
                                                 </form>
@@ -170,71 +158,53 @@
                                         </div>
 
 
-                    <!--                    <c:if test="${win}">-->
-                    <!--                        <div class="newTariff">-->
-                    <!--                            <form method="post"-->
-                    <!--                                  action="${pageContext.request.contextPath}/view/admin/listBook?param=${param.get('param')}&id=${param.get("id")}&button=update">-->
-                    <!--                            <p>-->
-                    <!--                                <label>-->
-                    <!--                                    <input class="tariff1" type="text" value="${param.get("name")}" required-->
-                    <!--                                    placeholder="<fmt:message key="name"/>"-->
-                    <!--                                    name="name">-->
-                    <!--                                </label>-->
-                    <!--                            </p>-->
-                    <!--                            <p>-->
-                    <!--                                <label>-->
-                    <!--                                    <input class="tariff1" type="text" value="${param.get("author")}" required-->
-                    <!--                                    placeholder="<fmt:message key="author"/>"-->
-                    <!--                                    name="author">-->
-                    <!--                                </label>-->
-                    <!--                            </p>-->
-                    <!--                            <p>-->
-                    <!--                                <label>-->
-                    <!--                                    <input class="tariff1" type="text" value="${param.get("genre")}" required-->
-                    <!--                                    placeholder="<fmt:message key="genre"/>"-->
-                    <!--                                    name="genre">-->
-                    <!--                                </label>-->
-                    <!--                            </p>-->
-                    <!--                            <p>-->
-                    <!--                                <label>-->
-                    <!--                                    <input class="tariff1" type="text" value="${param.get("publisher")}" required-->
-                    <!--                                    placeholder="<fmt:message key="publisher"/>"-->
-                    <!--                                    name="publisher">-->
-                    <!--                                </label>-->
-                    <!--                            </p>-->
 
-                    <!--                            <p>-->
-                    <!--                                <label>-->
-                    <!--                                    <input class="tariff1" type="text" value="${param.get("publisherDate")}" required-->
-                    <!--                                    placeholder="<fmt:message key="publisherDate"/>"-->
-                    <!--                                    name="publisherDate">-->
-                    <!--                                </label>-->
-                    <!--                            </p>-->
-                    <!--                            <p>-->
-                    <!--                                <label>-->
-                    <!--                                    <input class="tariff1" type="text" value="${param.get("description")}" required-->
-                    <!--                                    placeholder="<fmt:message key="description"/>"-->
-                    <!--                                    name="description">-->
-                    <!--                                </label>-->
-                    <!--                            </p>-->
-                    <!--                            <p>-->
-                    <!--                                <label>-->
-                    <!--                                    <input class="tariff1" type="text" value="${param.get("price")}" required-->
-                    <!--                                    placeholder="<fmt:message key="price"/>"-->
-                    <!--                                    name="price">-->
-                    <!--                                </label>-->
-                    <!--                            </p>-->
-                    <!--                            <input class="submitBtn" type="submit"-->
-                    <!--                                   onclick="return confirm('<fmt:message key="editBookConfirm"/>')"-->
-                    <!--                            value="<fmt:message key="update"/>">-->
-                    <!--                            </form>-->
-                    <!--                        </div>-->
-                    <!--                    </c:if>-->
+                                            <div class="newTariff" th:if="${win}">
+                                                <form method="post" th:object="${bookForm}" action="/mainAdmin/listBook/update">
+                                                <p>
+                                                    <label>
+                                                        <input class="tariff1" th:field="*{name}" required placeholder="Name">
+                                                    </label>
+                                                </p>
+                                                <p>
+                                                    <label>
+                                                        <input class="tariff1" th:field="*{author}" required placeholder="Author">
+                                                    </label>
+                                                </p>
+                                                <p>
+                                                    <label>
+                                                        <input class="tariff1" th:field="*{genre}" required placeholder="Genre">
+                                                    </label>
+                                                </p>
+                                                <p>
+                                                    <label>
+                                                        <input class="tariff1" th:field="*{publisher}" required placeholder="Publisher">
+                                                    </label>
+                                                </p>
+
+                                                <p>
+                                                    <label>
+                                                        <input class="tariff1" th:field="*{publisherDate}" required placeholder="Publisher Date">
+                                                    </label>
+                                                </p>
+                                                <p>
+                                                    <label>
+                                                        <input class="tariff1" th:field="*{description}" required placeholder="Description">
+                                                    </label>
+                                                </p>
+                                                <p>
+                                                    <label>
+                                                        <input class="tariff1" th:field="*{price}" required placeholder="Price">
+                                                    </label>
+                                                </p>
+                                                    <button type="submit" th:text="Submit" onclick="return confirm('editBookConfirm')" >update</button>
+                                                    <input type="hidden" th:field="*{id}" />
+                                                </form>
+                                            </div>
 
 
                                         <div class="plansBlock">
                                             <table class="tableService sortable">
-                                                <form action="/mainAdmin/listBook/delete" method="post">
                                                 <thead>
                                                 <tr>
                                                     <th>name</th>
@@ -257,17 +227,21 @@
                                                     <td th:text="${book.publisherDate}"></td>
                                                     <td th:text="${book.description}"></td>
                                                     <td th:text="${book.price}"></td>
+                                                    <form action="/mainAdmin/listBook/delete" method="post">
                                                     <td>
-                                                        <input type="submit" name="id" value="id" th:attr="value=${book.id}"
-                                                               onclick="return confirm('orderBookConfirm')"/>
+                                                        <button type="submit" onclick="return confirm('deleteBookConfirm')">delete</button>
+                                                        <input type="hidden" name="id" value="id" th:attr="value=${book.id}"/>
                                                     </td>
+                                                    </form>
+                                                    <form action="/mainAdmin/listBook/edit" method="post">
                                                     <td>
-                                                        <a class="updateButton"
-                                                           href="${pageContext.request.contextPath}/view/admin/listBook?id=${a.id}&button=set&name=${a.name}&author=${a.author}&genre=${a.genre}&publisher=${a.publisher}&publisherDate=${a.publisherDate}&description=${a.description}&price=${a.price}">edit</a>
+                                                        <button type="submit" onclick="return confirm('editBookConfirm')">edit</button>
+                                                        <input type="hidden" name="id" value="id" th:attr="value=${book.id}"/>
                                                     </td>
+                                                    </form>
                                                 </tr>
                                                 </tbody>
-                                                </form>
+
                                             </table>
                                         </div>
                 </div>

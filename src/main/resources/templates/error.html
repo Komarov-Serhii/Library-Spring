@@ -16,14 +16,14 @@
 <div align="centre">
   <h2>404</h2>
   <br>
-  <p>error</p>
+  <p th:text="#{lang.pageNotFound}"></p>
 </div>
 <form class="w3-container" align="center" method="post"
       action="/logout">
   <div class="w3-container w3-grey w3-opacity w3-right-align w3-padding">
     <div>
       <input class="w3-button w3-margin-bottom w3-green" type="submit"
-             value="logout">
+             th:value="#{lang.logout}">
     </div>
   </div>
 </form>

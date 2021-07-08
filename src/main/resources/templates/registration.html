@@ -3,7 +3,7 @@
       lang="en">
 
 <head>
-    <title>registration</title>
+    <title th:text="#{lang.registration}"></title>
 
     <link rel="stylesheet" th:href="@{/style.css}"/>
 
@@ -15,15 +15,13 @@
         <div class="container">
             <div class="row">
                 <div class="slidertext">
-                    <h3>registration</h3>
+                    <h3 th:text="#{lang.registration}"></h3>
                 </div>
                 <div class="tableTariffs" id="registerForm">
                     <div class="localRegistrationBlock">
-                        <a class="loginBtn" href="/mainPage">mainPage</a>
-                        <a class="loginBtn"
-                           href="${pageContext.request.contextPath}/view/language/registration?language=RU">RU</a>
-                        <a class="loginBtn"
-                           href="${pageContext.request.contextPath}/view/language/registration?language=EN">EN</a>
+                        <a class="loginBtn" href="/mainPage" th:text="#{lang.mainPage}" ></a>
+                        <a class="loginBtn" th:href="@{/registration(lang='ru')}">RU</a>
+                        <a class="loginBtn" th:href="@{/registration(lang='en')}">EN</a>
                     </div>
 
                     <form class="w3-container" align="center" method="post"
@@ -31,14 +29,14 @@
                         <p>
                             <label>
                                 <input class="profileEditorFields loginField" type="text" required
-                                       placeholder="name"
+                                       placeholder="Name"
                                 name="name">
                             </label>
                         </p>
 
                         <p>
                             <label>
-                                <input class="profileEditorFields loginField" type="text" required placeholder="Username"
+                                <input class="profileEditorFields loginField" type="text" required placeholder="Login"
                                        name="username" autofocus="true">
                             </label>
                         </p>
@@ -53,21 +51,21 @@
 
 
                         <input class="btn editProfileBtn" id="loginSubmitBtn" type="submit"
-                               value="registration">
+                               th:value="#{lang.registration}">
 <!--                        <:if test="${requestScope.wrongData}">-->
 <!--                            <div class="w3-container">-->
 <!--                                <th:message key="incorrectEmailOrPass"/>-->
 <!--                            </div>-->
 <!--                        </:if>-->
                             <div class="w3-container" th:if="${alreadyExist}">
-                                <p>alreadyExistPerson</p>
+                                <p th:text="#{lang.alreadyExistPerson}"></p>
                             </div>
                     </form>
                 </div>
             </div>
         </div>
         <div class="registerBlock">
-            <a class="loginBtn reg" href="/login">login</a>
+            <a class="loginBtn reg" href="/login" th:text="#{lang.login}"></a>
         </div>
     </div>
 </div>

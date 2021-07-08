@@ -42,9 +42,9 @@
             </div>
           </div>
 
-            <div class="serviceBlock">
+            <div class="serviceBlock" th:if="${win}">
                 <p th:if="${notBooks}">PersonDon'tHaveBooks</p>
-                <table class="tableService sortable" th:if="${!notBooks}">
+                <table class="tableService sortable" th:if="${list}">
                   <thead>
                   <tr>
                     <th>#</th>

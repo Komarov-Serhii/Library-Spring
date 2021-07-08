@@ -2,13 +2,12 @@ package com.example.springWeb.demo.service;
 
 import com.example.springWeb.demo.dto.BookDTO;
 import com.example.springWeb.demo.model.Book;
+import com.example.springWeb.demo.model.Details;
 import com.example.springWeb.demo.model.Order;
-import com.example.springWeb.demo.model.User;
 import com.example.springWeb.demo.repository.BookRepository;
 import com.example.springWeb.demo.repository.OrderRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -17,7 +16,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,10 +47,14 @@ public class BookService {
 
 
     public List<BookDTO> getAllBooksByFree() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long id_user = ((User)principal).getId();
         List<Book> bookList = bookRepository.findAllByActiveTrue();
-        checkDebtInBookByUser(id_user);
+        return parsingBookInBookDTO(bookList);
+    }
+
+    public List<BookDTO> getAllBooksByFreeAndCheckDebt(long id) {
+        logger.info(id);
+        List<Book> bookList = bookRepository.findAllByActiveTrue();
+        checkDebtInBookByUser(id);
         return parsingBookInBookDTO(bookList);
     }
 
@@ -85,6 +87,51 @@ public class BookService {
             return sortPublisherDate();
         }
 
+    }
+
+    public boolean addBook(BookDTO bookDTO) {
+        logger.info(bookDTO);
+        Book book = new Book();
+        Details details = new Details();
+        book.setName(bookDTO.getName());
+        details.setAuthor(bookDTO.getAuthor());
+        details.setDescription(bookDTO.getDescription());
+        details.setGenre(bookDTO.getGenre());
+        details.setPrice(bookDTO.getPrice());
+        details.setPublisher(bookDTO.getPublisher());
+        details.setPublisherDate(bookDTO.getPublisherDate());
+        book.setDetails(details);
+        logger.info(bookDTO);
+        bookRepository.save(book);
+        return true;
+    }
+
+
+    public boolean editBook(BookDTO bookDTO) {
+        Book book = bookRepository.getById(bookDTO.getId());
+        book.setName(bookDTO.getName());
+        book.getDetails().setAuthor(bookDTO.getAuthor());
+        book.getDetails().setDescription(bookDTO.getDescription());
+        book.getDetails().setGenre(bookDTO.getGenre());
+        book.getDetails().setPrice(bookDTO.getPrice());
+        book.getDetails().setPublisher(bookDTO.getPublisher());
+        book.getDetails().setPublisherDate(bookDTO.getPublisherDate());
+        bookRepository.save(book);
+        return true;
+    }
+
+    public BookDTO bookForEdit(long id) {
+        Book book = bookRepository.getById(id);
+        return BookDTO.builder()
+                .id(book.getId())
+                .name(book.getName())
+                .author(book.getDetails().getAuthor())
+                .publisher(book.getDetails().getPublisher())
+                .publisherDate(book.getDetails().getPublisherDate())
+                .description(book.getDetails().getDescription())
+                .price(book.getDetails().getPrice())
+                .genre(book.getDetails().getGenre())
+                .build();
     }
 
     private List<BookDTO> sortByName(){

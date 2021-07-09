@@ -17,17 +17,17 @@
   <header id="header" class="header-area">
     <div class="logoBlock">
       <div style="font-size: 16px; text-align: end;">
-        <a class="btn" href="${pageContext.request.contextPath}/view/language/personProfile?language=RU">RU</a>
-        <a class="btn" href="${pageContext.request.contextPath}/view/language/personProfile?language=EN">EN</a>
+        <a class="loginBtn" th:href="@{/userPage/userProfile(lang='ru')}">RU</a>
+        <a class="loginBtn" th:href="@{/userPage/userProfile(lang='en')}">EN</a>
       </div>
-      <p id="pageLogo">myLibrary</p>
+      <p id="pageLogo" th:text="#{lang.myLibrary}"></p>
       <div class="adminmenu">
         <ul>
           <li><a class="scroll-animite btn"
-                 href="/userPage">personPage</a>
+                 href="/userPage" th:text="#{lang.personPage}"></a>
           </li>
           <li><a class="scroll-animite logOutBtn"
-                 href="/logout">logout</a></li>
+                 href="/logout" th:text="#{lang.logout}"></a></li>
         </ul>
       </div>
     </div>
@@ -41,7 +41,7 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="slidertext">
-              <h1>myProfile</h1>
+              <h1 th:text="#{lang.myProfile}"></h1>
             </div>
           </div>
           <div class="plansBlockProfile">
@@ -50,10 +50,10 @@
               <table class="tableService sortable">
                 <thead>
                 <tr>
-                  <th>name</th>
+                  <th th:text="#{lang.name}"></th>
                   <th>Email</th>
                   <th>password</th>
-                  <th>edit</th>
+                  <th th:text="#{lang.edit}"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -63,20 +63,20 @@
                   <td> ****</td>
                   <form action="/userPage/userProfile/edit" method="post">
                     <td>
-                      <button type="submit" onclick="return confirm('editPersonConfirm')">edit</button>
+                      <button type="submit" onclick="return confirm('editPersonConfirm')" th:text="#{lang.edit}"></button>
                     </td>
                   </form>
                 </tr>
                 </tbody>
               </table>
-              <p th:if="${wrongData}">incorrectEmailOrPass</p>
+              <p th:if="${wrongData}" th:text="#{lang.incorrectEmailOrPass}"></p>
             </div>
               <div class="serviceBlock"  th:if="${tab}">
-                <p>edit</p>
+                <p th:text="#{lang.edit}"></p>
                 <form method="post" th:object="${userForm}" action="/userPage/userProfile/update">
                 <p>
                   <label>
-                    <input class="tariff1" th:field="*{name}" required placeholder="Name">
+                    <input class="tariff1" th:field="*{name}" th:placeholder="#{lang.name}">
                   </label>
                 </p>
                 <p>
@@ -86,16 +86,16 @@
                 </p>
                 <p>
                   <label>
-                    <input class="tariff1" th:field="*{oldPassword}" required placeholder="Old password">
+                    <input class="tariff1" th:field="*{oldPassword}" th:placeholder="#{lang.oldPassword}">
                   </label>
                 </p>
 
                   <p>
                   <label>
-                    <input class="tariff1" th:field="*{newPassword}" required placeholder="New password">
+                    <input class="tariff1" th:field="*{newPassword}" th:placeholder="#{lang.newPassword}">
                   </label>
                 </p>
-                  <button type="submit" th:text="Submit" onclick="return confirm('updateProfile')" >update</button>
+                  <button type="submit" onclick="return confirm('updateProfile')" th:text="#{lang.update}"></button>
                 </form>
               </div>
           </div>

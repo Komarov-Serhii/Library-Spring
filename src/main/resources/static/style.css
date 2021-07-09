@@ -42,6 +42,18 @@ body {
 .bodyChild {
 }
 
+.inlineBlock {
+    display: flex;
+    padding: 20px;
+    margin: 10px 5px 10px 5px;
+}
+
+.inlineBlock2 {
+    display: inline-flex;
+    padding: 20px;
+    margin: 10px 5px 10px 5px;
+}
+
 img {
     max-width: 100%;
     -webkit-transition: all 0.3s ease-out 0s;
@@ -882,7 +894,7 @@ input.tariff1 {
 
 
 .userInfo {
-    display: grid;
+    display: flow-root;
     align-items: center;
     border: 2px solid #171717;
     background: #ffffff;
@@ -891,7 +903,7 @@ input.tariff1 {
     min-width: 500px;
     padding: 15px;
     width: max-content;
-    height: 200px;
+    /*height: 200px;*/
     margin: auto;
 }
 

@@ -17,23 +17,23 @@
   <header id="header" class="header-area">
     <div class="logoBlock">
       <div style="font-size: 16px; text-align: end;">
-        <a class="btn" href="${pageContext.request.contextPath}/view/language/personInfoBookPage?language=RU">RU</a>
-        <a class="btn" href="${pageContext.request.contextPath}/view/language/personInfoBookPage?language=EN">EN</a>
+        <a class="loginBtn" th:href="@{/userPage/userInfo(lang='ru')}">RU</a>
+        <a class="loginBtn" th:href="@{/userPage/userInfo(lang='en')}">EN</a>
       </div>
-      <p id="pageLogo">navigation</p>
+      <p id="pageLogo" th:text="#{lang.navigation}"></p>
       <div class="adminmenu">
         <ul>
           <li><a class="scroll-animite btn"
-                 href="/userPage/userBook">myBooks</a>
+                 href="/userPage/userBook" th:text="#{lang.myBooks}"></a>
           </li>
           <li><a class="scroll-animite btn"
-                 href="/userPage/userOrder">myOrders</a></a>
+                 href="/userPage/userOrder" th:text="#{lang.myOrders}"></a></a>
           </li>
           <li><a class="scroll-animite btn"
-                 href="/userPage">userPage</a></a>
+                 href="/userPage" th:text="#{lang.personPage}"></a></a>
           </li>
           <li><a class="scroll-animite logOutBtn"
-                 href="/logout">logout</a></li>
+                 href="/logout" th:text="#{lang.logout}"></a></li>
         </ul>
       </div>
     </div>
@@ -50,13 +50,22 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="slidertext">
-              <h1>Your info</h1>
+              <h1 th:text="#{lang.yourInfo}"></h1>
             </div>
           </div>
           <div class="userInfo">
-            <h4>myBooks: <span th:text="${books}"></span></h4>
-            <h4>myOrders: <span th:text="${orders}"></span></h4>
-            <h4>debt : <span th:text="${debt}"></span></h4>
+            <div class="inlineBlock2">
+              <h4 th:text="#{lang.myBooks}"></h4>
+              <h4>:  <span th:text="${books}"> </span></span></h4>
+            </div>
+            <div class="inlineBlock2">
+              <h4 th:text="#{lang.myOrders}"></h4>
+              <h4>:  <span th:text="${orders}"> </span></span></h4>
+            </div>
+            <div class="inlineBlock2">
+              <h4 th:text="#{lang.debt}"></h4>
+              <h4>:  <span th:text="${debt}"> </span></span></h4>
+            </div>
           </div>
         </div>
       </div>

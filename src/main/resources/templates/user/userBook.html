@@ -17,17 +17,17 @@
   <header id="header" class="header-area">
     <div class="logoBlock">
       <div style="font-size: 16px; text-align: end;">
-        <a class="btn" href="${pageContext.request.contextPath}/view/language/personBookPage?language=RU">RU</a>
-        <a class="btn" href="${pageContext.request.contextPath}/view/language/personBookPage?language=EN">EN</a>
+        <a class="loginBtn" th:href="@{/userPage/userBook(lang='ru')}">RU</a>
+        <a class="loginBtn" th:href="@{/userPage/userBook(lang='en')}">EN</a>
       </div>
-      <p id="pageLogo">myLibrary</p>
+      <p id="pageLogo" th:text="#{lang.myLibrary}"></p>
       <div class="adminmenu">
         <ul>
           <li><a class="scroll-animite btn"
-                 href="/userPage">personPage</a>
+                 href="/userPage" th:text="#{lang.personPage}"></a>
           </li>
           <li><a class="scroll-animite logOutBtn"
-                 href="/logout">logout</a></li>
+                 href="/logout" th:text="#{lang.logout}"></a></li>
         </ul>
       </div>
     </div>
@@ -42,23 +42,23 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="slidertext">
-              <h1>myBooks</h1>
+              <h1 th:text="#{lang.myBooks}"></h1>
             </div>
           </div>
           <div class="plansBlock">
             <table class="tableService">
               <thead>
               <tr>
-                <th>name</th>
-                <th>author</th>
-                <th>genre</th>
-                <th>publisher</th>
-                <th>publisherDate</th>
-                <th>description</th>
-                <th>price</th>
-                <th>penalty</th>
-                <th>deadline</th>
-                <th>return</th>
+                <th th:text="#{lang.name}"></th>
+                <th th:text="#{lang.author}"></th>
+                <th th:text="#{lang.genre}"></th>
+                <th th:text="#{lang.publisher}"></th>
+                <th th:text="#{lang.publisherDate}"></th>
+                <th th:text="#{lang.description}"></th>
+                <th th:text="#{lang.price}"></th>
+                <th th:text="#{lang.penalty}"></th>
+                <th th:text="#{lang.deadline}"></th>
+                <th th:text="#{lang.return}"></th>
               </tr>
               </thead>
               <tbody>
@@ -74,13 +74,13 @@
                   <td th:text="${book.returnDate}"></td>
                   <form action="/userPage/userBook/return" method="post">
                     <td th:if="${book.debt == 0}">
-                      <button type="submit" onclick="return confirm('returnConfirm')">return</button>
+                      <button type="submit" onclick="return confirm('returnConfirm')" th:text="#{lang.return}"></button>
                       <input type="hidden" name="id" value="id" th:attr="value=${book.id}"/>
                     </td>
                   </form>
                   <form action="/userPage/userBook/pay" method="post">
                     <td th:if="${book.debt > 0}">
-                      <button type="submit" onclick="return confirm('payConfirm')">payFine</button>
+                      <button type="submit" onclick="return confirm('payConfirm')" th:text="#{lang.payFine}"></button>
                       <input type="hidden" name="id" value="id" th:attr="value=${book.id}"/>
                     </td>
                   </form>

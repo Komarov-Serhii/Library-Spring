@@ -28,8 +28,7 @@
                           action="/registration">
                         <p>
                             <label>
-                                <input class="profileEditorFields loginField" type="text" required
-                                       placeholder="Name"
+                                <input class="profileEditorFields loginField" type="text" th:placeholder="#{lang.name}"
                                 name="name">
                             </label>
                         </p>
@@ -65,7 +64,7 @@
             </div>
         </div>
         <div class="registerBlock">
-            <a class="loginBtn reg" href="/login" th:text="#{lang.login}"></a>
+            <a class="loginBtn reg" href="/" th:text="#{lang.login}"></a>
         </div>
     </div>
 </div>

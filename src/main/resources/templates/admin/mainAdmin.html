@@ -48,12 +48,30 @@
             </div>
           </div>
           <div class="userInfo">
-            <h4>countUser: <span th:text="${people}"></span></h4>
-            <h4>countActive: <span th:text="${active}"></span></h4>
-            <h4>countBlocked : <span th:text="${blocked}"></span></h4>
-            <h4>countBooks: <span th:text="${books}"></span></h4>
-            <h4>countBooksBusy: <span th:text="${booksBusy}"></span></h4>
-            <h4>countOrder: <span th:text="${order}"></span></h4>
+            <div class="inlineBlock">
+              <h4 th:text="#{lang.countUser}"></h4>
+              <h4>:  <span th:text="${people}"> </span></span></h4>
+            </div>
+            <div class="inlineBlock">
+              <h4 th:text="#{lang.countActive}"></h4>
+              <h4>:  <span th:text="${active}"> </span></span></h4>
+            </div>
+            <div class="inlineBlock">
+              <h4 th:text="#{lang.countBlocked}"></h4>
+              <h4>:  <span th:text="${blocked}"> </span></span></h4>
+            </div>
+            <div class="inlineBlock">
+              <h4 th:text="#{lang.countBooks}"></h4>
+              <h4>:  <span th:text="${books}"> </span></span></h4>
+            </div>
+            <div class="inlineBlock">
+              <h4 th:text="#{lang.countBooksBusy}"></h4>
+              <h4>:  <span th:text="${booksBusy}"> </span></span></h4>
+            </div>
+            <div class="inlineBlock">
+              <h4 th:text="#{lang.countOrder}"></h4>
+              <h4>:  <span th:text="${order}"> </span></span></h4>
+            </div>
           </div>
         </div>
       </div>

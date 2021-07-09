@@ -8,6 +8,7 @@ import com.example.springWeb.demo.service.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,42 +34,44 @@ public class MainController {
     BookService bookService;
 
     @GetMapping("/successLogin")
-    public void loginPageRedirect(HttpServletResponse response, Authentication authResult) throws IOException {
+    public String loginPageRedirect(Model model, Authentication authResult) throws IOException {
 
         String role = authResult.getAuthorities().toString();
 
-        if (role.contains("ROLE_ADMIN")) {
-            response.sendRedirect(response.encodeRedirectURL("/mainAdmin"));
-        } else {
-            response.sendRedirect(response.encodeRedirectURL("/userPage"));
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUserById(principal.getId());
+
+
+
+        if(!user.isActive()) {
+            model.addAttribute("ban", true);
+            return "login";
         }
+
+        if (role.contains("ROLE_ADMIN")) {
+            return "redirect:/mainAdmin";
+        } else {
+            return "redirect:/userPage";
+        }
+
     }
+
+    @GetMapping("/")
+    public String loginPage() {
+        return "login";
+    }
+
+    @GetMapping("/login")
+    public String loginFail(@RequestParam(name = "error") boolean error, Model model) {
+        if (error) {
+            model.addAttribute("wrongData", true);
+        }
+        return "login";
+    }
+
 
     @GetMapping("/error")
     public String handleError(HttpServletRequest request, Authentication authentication) {
-        // get error status
-//        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-//
-//        if(authentication.getAuthorities().toString().equals("ADMIN")){
-//            request.setAttribute("path", "adminPage");
-//        } else {
-//            request.setAttribute("path", "clientPage");
-//        }
-//
-//        if (status != null) {
-//            int statusCode = Integer.parseInt(status.toString());
-//
-//            // display specific error page
-//            if (statusCode == HttpStatus.NOT_FOUND.value()) {
-//                return "404";
-//            } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-//                return "500";
-//            } else if (statusCode == HttpStatus.FORBIDDEN.value()) {
-//                return "403";
-//            }
-//        }
-//
-//        // display generic error
         return "error";
     }
 

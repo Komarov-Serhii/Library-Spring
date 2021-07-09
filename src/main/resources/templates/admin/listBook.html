@@ -73,41 +73,41 @@
                                                 <form method="post" th:object="${newBookForm}" action="/mainAdmin/listBook/add">
                                                 <p>
                                                     <label>
-                                                        <input class="tariff1" th:field="*{name}" required placeholder="Name">
+                                                        <input class="tariff1" th:field="*{name}" th:placeholder="#{lang.name}">
                                                     </label>
                                                 </p>
                                                 <p>
                                                     <label>
-                                                        <input class="tariff1" th:field="*{author}" required placeholder="Author">
+                                                        <input class="tariff1" th:field="*{author}" th:placeholder="#{lang.author}">
                                                     </label>
                                                 </p>
                                                 <p>
                                                     <label>
-                                                        <input class="tariff1" th:field="*{genre}" required placeholder="Genre">
+                                                        <input class="tariff1" th:field="*{genre}" th:placeholder="#{lang.genre}">
                                                     </label>
                                                 </p>
                                                 <p>
                                                     <label>
-                                                        <input class="tariff1" th:field="*{publisher}" required placeholder="Publisher">
+                                                        <input class="tariff1" th:field="*{publisher}" th:placeholder="#{lang.publisher}">
                                                     </label>
                                                 </p>
 
                                                 <p>
                                                     <label>
-                                                        <input class="tariff1" th:field="*{publisherDate}" required placeholder="Publisher Date">
+                                                        <input class="tariff1" th:field="*{publisherDate}" th:placeholder="#{lang.publisherDate}">
                                                     </label>
                                                 </p>
                                                 <p>
                                                     <label>
-                                                        <input class="tariff1" th:field="*{description}" required placeholder="Description">
+                                                        <input class="tariff1" th:field="*{description}" th:placeholder="#{lang.description}">
                                                     </label>
                                                 </p>
                                                 <p>
                                                     <label>
-                                                        <input class="tariff1" th:field="*{price}" required placeholder="Price">
+                                                        <input class="tariff1" th:field="*{price}" th:placeholder="#{lang.price}">
                                                     </label>
                                                 </p>
-                                                    <button type="submit" onclick="return confirm('addBookConfirm')">add</button>
+                                                    <button type="submit" onclick="return confirm('addBookConfirm')" th:text="#{lang.add}"></button>
                                                 </form>
                                             </div>
 
@@ -159,42 +159,42 @@
 
                                             <div class="newTariff" th:if="${win}">
                                                 <form method="post" th:object="${bookForm}" action="/mainAdmin/listBook/update">
-                                                <p>
-                                                    <label>
-                                                        <input class="tariff1" th:field="*{name}" required placeholder="Name">
-                                                    </label>
-                                                </p>
-                                                <p>
-                                                    <label>
-                                                        <input class="tariff1" th:field="*{author}" required placeholder="Author">
-                                                    </label>
-                                                </p>
-                                                <p>
-                                                    <label>
-                                                        <input class="tariff1" th:field="*{genre}" required placeholder="Genre">
-                                                    </label>
-                                                </p>
-                                                <p>
-                                                    <label>
-                                                        <input class="tariff1" th:field="*{publisher}" required placeholder="Publisher">
-                                                    </label>
-                                                </p>
+                                                    <p>
+                                                        <label>
+                                                            <input class="tariff1" th:field="*{name}" th:placeholder="#{lang.name}">
+                                                        </label>
+                                                    </p>
+                                                    <p>
+                                                        <label>
+                                                            <input class="tariff1" th:field="*{author}" th:placeholder="#{lang.author}">
+                                                        </label>
+                                                    </p>
+                                                    <p>
+                                                        <label>
+                                                            <input class="tariff1" th:field="*{genre}" th:placeholder="#{lang.genre}">
+                                                        </label>
+                                                    </p>
+                                                    <p>
+                                                        <label>
+                                                            <input class="tariff1" th:field="*{publisher}" th:placeholder="#{lang.publisher}">
+                                                        </label>
+                                                    </p>
 
-                                                <p>
-                                                    <label>
-                                                        <input class="tariff1" th:field="*{publisherDate}" required placeholder="Publisher Date">
-                                                    </label>
-                                                </p>
-                                                <p>
-                                                    <label>
-                                                        <input class="tariff1" th:field="*{description}" required placeholder="Description">
-                                                    </label>
-                                                </p>
-                                                <p>
-                                                    <label>
-                                                        <input class="tariff1" th:field="*{price}" required placeholder="Price">
-                                                    </label>
-                                                </p>
+                                                    <p>
+                                                        <label>
+                                                            <input class="tariff1" th:field="*{publisherDate}" th:placeholder="#{lang.publisherDate}">
+                                                        </label>
+                                                    </p>
+                                                    <p>
+                                                        <label>
+                                                            <input class="tariff1" th:field="*{description}" th:placeholder="#{lang.description}">
+                                                        </label>
+                                                    </p>
+                                                    <p>
+                                                        <label>
+                                                            <input class="tariff1" th:field="*{price}" th:placeholder="#{lang.price}">
+                                                        </label>
+                                                    </p>
                                                     <button type="submit" onclick="return confirm('editBookConfirm')" th:text="#{lang.update}" ></button>
                                                     <input type="hidden" th:field="*{id}" />
                                                 </form>

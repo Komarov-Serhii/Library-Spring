@@ -54,22 +54,17 @@
 <!--                            </div>-->
 <!--                        </div>-->
 
-<!--                        <div th:if="${requestScope.wrongData}">-->
-<!--                            <div class="w3-container">-->
-<!--                                <th:message key="incorrectData"/>-->
-<!--                            </div>-->
-<!--                        </div>-->
+
+                            <div class="w3-container" th:if="${wrongData}">
+                                <p th:text="#{lang.incorrectData}"></p>
+                            </div>
 
 
-<!--                        <div>-->
-<!--                            <div id="center">-->
-<!--                                <div th:if="${requestScope.errorMessage}">-->
-<!--                                    <p><th:message key="infoBan"/></p>-->
-<!--                                    <p><th:message key="moreInfoBan"/></p>-->
-<!--                                    <a href="#">+380661345678</a>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                            <div id="center" th:if="${ban}">
+                                    <p th:text="#{lang.infoBan}"></p>
+                                    <p th:text="#{lang.moreInfoBan}" ></p>
+                                    <a href="#">+380661345678</a>
+                            </div>
                     </form>
                 </div>
 

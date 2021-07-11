@@ -13,5 +13,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findAllByActiveFalse();
 
     @Query("SELECT b FROM Book b where b.active = true")
-    List<Book> findByOrderByNameDesc();
+    List<Book> findByOrderByNameAsc();
 }

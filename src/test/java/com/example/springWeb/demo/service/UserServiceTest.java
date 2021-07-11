@@ -60,94 +60,95 @@ public class UserServiceTest {
         boolean active = true;
 
 
-        when(userRepository.getById(id)).thenReturn(createUser(id,"Serg", "sergo@gmail.com",active));
+        when(userRepository.getById(id)).thenReturn(createUser(id, "Serg", "sergo@gmail.com", active, "124124vdsvF"));
 
         userService.changeActive(id, active);
 
         assertEquals(false, userRepository.getById(id).isActive());
     }
 
-//    public boolean changeActive(Long id, boolean active) {
-//        User user = userRepository.getById(id);
-//        logger.info(user);
-//        if (active) {
-//            user.setActive(false);
-//        } else {
-//            user.setActive(true);
-//        }
-//        userRepository.save(user);
-//        logger.info(user);
-//        return true;
-//    }
-
-
 
     private List<Order> createListOrdersWhereStatusTrue() {
         Order order = new Order();
         order.setId(1);
-        order.setUser(createUser(1,"Vasya", "v@gmail.com",false));
-        order.setBook(createBook());
+        order.setUser(createUser(1, "Vasya", "v@gmail.com", false, "12345434fwe"));
+        order.setBook(createBook(1, "Дети капитана Гранта", true, createDetails(1, "ИНИГМА",
+                "ИНИГМА", "2015", "Adventure", "Nice book", 500)));
         order.setStatus(true);
         order.setDate(Date.valueOf("2020-10-10"));
         order.setDebt(0);
 
         Order order2 = new Order();
         order2.setId(1);
-        order2.setUser(createUser(1,"Serg", "sergo@gmail.com",false));
-        order2.setBook(createBook());
+        order2.setUser(createUser(1, "Serg", "sergo@gmail.com", false, "124fwe"));
+        order2.setBook(createBook(1, "Дети капитана Гранта", true, createDetails(1, "ИНИГМА",
+                "ИНИГМА", "2015", "Adventure", "Nice book", 500)));
         order2.setStatus(true);
         order2.setDate(Date.valueOf("2020-04-04"));
         order2.setDebt(300);
 
-        return List.of(order,order2);
+        return List.of(order, order2);
     }
 
     private List<Order> createListOrdersWhereStatusFalse() {
-        Order order = new Order();
-        order.setId(1);
-        order.setUser(createUser(1,"Vasya", "v@gmail.com",false));
-        order.setBook(createBook());
-        order.setStatus(false);
-        order.setDate(null);
-        order.setDebt(0);
+        Order order1 = Order
+                .builder()
+                .id(1)
+                .user(createUser(1, "Vasya", "v@gmail.com", false, "12345434fwe"))
+                .book(createBook(1, "Дети капитана Гранта", true, createDetails(1, "ИНИГМА",
+                        "ИНИГМА", "2015", "Adventure", "Nice book", 500)))
+                .debt(0)
+                .date(null)
+                .status(false)
+                .build();
 
-        Order order2 = new Order();
-        order2.setId(1);
-        order2.setUser(createUser(1,"Serg", "sergo@gmail.com",false));
-        order2.setBook(createBook());
-        order2.setStatus(false);
-        order2.setDate(null);
-        order2.setDebt(0);
+        Order order2 = Order
+                .builder()
+                .id(1)
+                .user(createUser(1, "Vasya", "v@gmail.com", false, "12345434fwe"))
+                .book(createBook(1, "Дети капитана Гранта", true, createDetails(1, "ИНИГМА",
+                        "ИНИГМА", "2015", "Adventure", "Nice book", 500)))
+                .debt(0)
+                .date(null)
+                .status(false)
+                .build();
 
-        return List.of(order,order2);
+        return List.of(order1, order2);
     }
 
-    private User createUser(long id, String name, String email, boolean active) {
-        User user = new User();
-        user.setId(id);
-        user.setName(name);
-        user.setUsername(email);
-        user.setActive(active);
-        user.setPassword("asdfg");
-        return user;
+    private User createUser(long id, String name, String email, boolean active, String password) {
+        return User
+                .builder()
+                .id(id)
+                .active(active)
+                .username(email)
+                .name(name)
+                .password(password)
+                .build();
     }
-    private Book createBook() {
-        Book book = new Book();
-        book.setId(1);
-        book.setName("Serg");
-        book.setActive(true);
-        book.setDetails(createDetails());
-        return book;
+
+    private Book createBook(long id, String name, boolean active, Details details) {
+        return Book
+                .builder()
+                .id(id)
+                .name(name)
+                .details(details)
+                .active(active)
+                .build();
     }
-    private Details createDetails() {
-        Details details = new Details();
-        details.setId(1);
-        details.setAuthor("Serg");
-        details.setPublisher("Gener");
-        details.setPublisherDate("2016");
-        details.setGenre("Action");
-        details.setDescription("true");
-        return details;
+
+    private Details createDetails(long id, String author, String publisher,
+                                  String publisherDate, String genre, String description, int price) {
+        return Details
+                .builder()
+                .id(id)
+                .author(author)
+                .publisher(publisher)
+                .publisherDate(publisherDate)
+                .genre(genre)
+                .description(description)
+                .price(price)
+                .build();
     }
 
 }

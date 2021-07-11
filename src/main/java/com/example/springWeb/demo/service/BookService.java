@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -42,7 +41,6 @@ public class BookService {
     }
 
     public List<BookDTO> getAllBooksByFreeAndCheckDebt(long id) {
-        logger.info(id);
         List<Book> bookList = bookRepository.findAllByActiveTrue();
         checkDebtInBookByUser(id);
         return parsingBookInBookDTO(bookList);
@@ -124,8 +122,22 @@ public class BookService {
                 .build();
     }
 
+    public List<Order> checkDebtInBookByUser(long id) {
+        List<Order> orders = orderRepository.findAllByUser_idAndStatusIsTrue(id);
+        if (!orders.isEmpty()) {
+            orders.stream()
+                    .filter(o -> LocalDate.now().isAfter(Instant.ofEpochMilli(o.getDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate()))
+                    .forEach(o -> o.setDebt(o.getBook().getDetails().getPrice() / 100 * 30));
+            for (Order order : orders) {
+                orderRepository.save(order);
+            }
+        }
+        return orders;
+    }
+
+
     private List<BookDTO> sortByName(){
-        List<Book> books = bookRepository.findByOrderByNameDesc();
+        List<Book> books = bookRepository.findByOrderByNameAsc();
         return parsingBookInBookDTO(books);
     }
 
@@ -137,26 +149,14 @@ public class BookService {
 
     private List<BookDTO> sortPublisher() {
         List<BookDTO> list = getAllBooksByFree();
-        list.sort(new BookDTO.AuthorComparator());
+        list.sort(new BookDTO.PublisherComparator());
         return list;
     }
 
     private List<BookDTO> sortPublisherDate() {
         List<BookDTO> list = getAllBooksByFree();
-        list.sort(new BookDTO.AuthorComparator());
+        list.sort(new BookDTO.PublisherDateComparator());
         return list;
-    }
-
-    public void checkDebtInBookByUser(long id) {
-        List<Order> orders = orderRepository.findAllByUser_idAndStatusIsTrue(id);
-        if (!orders.isEmpty()) {
-            orders.stream()
-                    .filter(o -> LocalDate.now().isAfter(Instant.ofEpochMilli(o.getDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate()))
-                    .forEach(o -> o.setDebt(o.getBook().getDetails().getPrice() / 100 * 30));
-            for (Order order : orders) {
-                orderRepository.save(order);
-            }
-        }
     }
 
 

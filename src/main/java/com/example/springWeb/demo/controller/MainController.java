@@ -7,11 +7,14 @@ import com.example.springWeb.demo.model.User;
 import com.example.springWeb.demo.service.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 
@@ -19,7 +22,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MainController {
@@ -104,7 +109,8 @@ public class MainController {
     }
 
     @GetMapping ("/registration")
-    public String registrationWithLog() {
+    public String registrationWithLog(Model model) {
+        model.addAttribute("userForm",new User());
         return "registration";
     }
 
@@ -119,7 +125,8 @@ public class MainController {
             model.addAttribute("alreadyExist", true);
             return "registration";
         }
-
-        return "redirect:/login";
+        return "redirect:/";
     }
+
+
 }

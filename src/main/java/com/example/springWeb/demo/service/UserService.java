@@ -17,9 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.EntityNotFoundException;
-import java.sql.Date;
 import java.util.*;
 
 @Service
@@ -71,17 +69,6 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
-
-    public boolean deleteUser(long personId) {
-        userRepository.deleteById(personId);
-        return true;
-    }
-
-
-    public List<UserDTO> getAllUsers() {
-        return parsingUserInUserDTO(userRepository.findAll());
-    }
-
     public List<UserDTO> getAllReaders() {
         return parsingUserInUserDTO(userRepository.getUserListByRolesName("ROLE_USER"));
 
@@ -104,25 +91,25 @@ public class UserService implements UserDetailsService {
     }
 
     public InfoBookAndUserDTO countInfoAboutUserAndBook() {
-        var infoBookAndUserDTO = new InfoBookAndUserDTO();
-
-        infoBookAndUserDTO.setCountUser(userRepository.findAll().size());
-        infoBookAndUserDTO.setCountActiveUser(userRepository.findAllByActiveTrue().size());
-        infoBookAndUserDTO.setCountBlockedUser(userRepository.findAllByActiveFalse().size());
-        infoBookAndUserDTO.setCountBook(bookRepository.findAll().size());
-        infoBookAndUserDTO.setCountBusyBook(bookRepository.findAllByActiveFalse().size());
-        infoBookAndUserDTO.setCountOrderBook(orderRepository.findAll().size());
-        return infoBookAndUserDTO;
+        return InfoBookAndUserDTO
+                .builder()
+                .countUser(userRepository.findAll().size())
+                .countActiveUser(userRepository.findAllByActiveTrue().size())
+                .countBlockedUser(userRepository.findAllByActiveFalse().size())
+                .countBook(bookRepository.findAll().size())
+                .countBusyBook(bookRepository.findAllByActiveFalse().size())
+                .countOrderBook(orderRepository.findAll().size())
+                .build();
     }
 
-    public InfoUserDTO countInfoUserDTO(long user_id) {
-        List<Order> order = orderRepository.findAllByUser_IdAndStatusIsTrue(user_id);
+    public InfoUserDTO countInfoUserDTO(long userId) {
+        List<Order> orders = orderRepository.findAllByUser_IdAndStatusIsTrue(userId);
         int count = 0;
-        count += order.stream().mapToInt(Order::getDebt).sum();
+        count += orders.stream().mapToInt(Order::getDebt).sum();
 
         return InfoUserDTO.builder()
-                .contBook(order.size())
-                .contOrder(orderRepository.findAllByUser_IdAndStatusIsFalse(user_id).size())
+                .contBook(orders.size())
+                .contOrder(orderRepository.findAllByUser_IdAndStatusIsFalse(userId).size())
                 .contDebt(count)
                 .build();
     }
@@ -207,7 +194,7 @@ public class UserService implements UserDetailsService {
     public boolean editProfile(long id, UserForProfileDTO userForm) {
         User user = userRepository.getById(id);
 
-        logger.info(user);
+
         user.setName(userForm.getName());
         user.setUsername(userForm.getEmail());
 
@@ -216,7 +203,7 @@ public class UserService implements UserDetailsService {
         } else {
             return false;
         }
-        logger.info(user);
+
         userRepository.save(user);
 
         return true;
@@ -232,11 +219,13 @@ public class UserService implements UserDetailsService {
     private List<UserDTO> parsingUserInUserDTO(List<User> list) {
         List<UserDTO> userDTOS = new ArrayList<>();
         for (User user : list) {
-            var userDTO = new UserDTO();
-            userDTO.setId(user.getId());
-            userDTO.setName(user.getName());
-            userDTO.setEmail(user.getUsername());
-            userDTO.setActive(user.isActive());
+            var userDTO = UserDTO
+                    .builder()
+                    .id(user.getId())
+                    .name(user.getName())
+                    .email(user.getUsername())
+                    .active(user.isActive())
+                    .build();
             userDTOS.add(userDTO);
         }
         return userDTOS;

@@ -30,19 +30,9 @@ public class BookService {
     private Logger logger = Logger.getLogger(BookService.class);
 
 
-    public Book saveBook(Book book) {
-        return bookRepository.save(book);
-    }
-
     public boolean deleteBook(long bookId) {
         bookRepository.deleteById(bookId);
         return true;
-    }
-
-
-    public List<BookDTO> getAllBooks() {
-        List<Book> bookList = bookRepository.findAll();
-        return parsingBookInBookDTO(bookList);
     }
 
 
@@ -56,11 +46,6 @@ public class BookService {
         List<Book> bookList = bookRepository.findAllByActiveTrue();
         checkDebtInBookByUser(id);
         return parsingBookInBookDTO(bookList);
-    }
-
-
-    public Book getBookById(long bookId) {
-        return bookRepository.findById(bookId).orElseThrow(() -> new EntityNotFoundException("Book not found"));
     }
 
 
@@ -90,18 +75,23 @@ public class BookService {
     }
 
     public boolean addBook(BookDTO bookDTO) {
-        logger.info(bookDTO);
-        Book book = new Book();
-        Details details = new Details();
-        book.setName(bookDTO.getName());
-        details.setAuthor(bookDTO.getAuthor());
-        details.setDescription(bookDTO.getDescription());
-        details.setGenre(bookDTO.getGenre());
-        details.setPrice(bookDTO.getPrice());
-        details.setPublisher(bookDTO.getPublisher());
-        details.setPublisherDate(bookDTO.getPublisherDate());
-        book.setDetails(details);
-        logger.info(bookDTO);
+        Details details = Details
+                .builder()
+                .author(bookDTO.getAuthor())
+                .description(bookDTO.getDescription())
+                .genre(bookDTO.getGenre())
+                .price(bookDTO.getPrice())
+                .publisher(bookDTO.getPublisher())
+                .publisherDate(bookDTO.getPublisherDate())
+                .build();
+
+        Book book = Book.
+                builder()
+                .name(bookDTO.getName())
+                .details(details)
+                .active(true)
+                .build();
+
         bookRepository.save(book);
         return true;
     }
@@ -156,13 +146,6 @@ public class BookService {
         list.sort(new BookDTO.AuthorComparator());
         return list;
     }
-
-//    public List<BookDTO> listBookByUser(Long id) {
-//        List<Order> order = orderRepository.findAllByUser(id);
-//
-//        return null;
-//    }
-
 
     public void checkDebtInBookByUser(long id) {
         List<Order> orders = orderRepository.findAllByUser_idAndStatusIsTrue(id);

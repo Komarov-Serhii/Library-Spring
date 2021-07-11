@@ -5,104 +5,110 @@
 <meta charset="utf-8">
 
 <head>
-  <title>Profile</title>
+    <title>Profile</title>
 
-  <link rel="stylesheet" th:href="@{/style.css}"/>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
 
 </head>
 
-<body style="zoom: 90%" >
+<body style="zoom: 90%">
 <div id="home"></div>
 <div class="ournet-inter-area">
-  <header id="header" class="header-area">
-    <div class="logoBlock">
-      <div style="font-size: 16px; text-align: end;">
-        <a class="loginBtn" th:href="@{/userPage/userProfile(lang='ru')}">RU</a>
-        <a class="loginBtn" th:href="@{/userPage/userProfile(lang='en')}">EN</a>
-      </div>
-      <p id="pageLogo" th:text="#{lang.myLibrary}"></p>
-      <div class="adminmenu">
-        <ul>
-          <li><a class="scroll-animite btn"
-                 href="/userPage" th:text="#{lang.personPage}"></a>
-          </li>
-          <li><a class="scroll-animite logOutBtn"
-                 href="/logout" th:text="#{lang.logout}"></a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div id="time"><span id="datetime"></span></div>
-  </header>
-  <!-- Slider area Start -->
-  <div class="slider-area">
-    <div class="slider-bg text-center">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="slidertext">
-              <h1 th:text="#{lang.myProfile}"></h1>
+    <header id="header" class="header-area">
+        <div class="logoBlock">
+            <div style="font-size: 16px; text-align: end;">
+                <a class="loginBtn" th:href="@{/userPage/userProfile(lang='ru')}">RU</a>
+                <a class="loginBtn" th:href="@{/userPage/userProfile(lang='en')}">EN</a>
             </div>
-          </div>
-          <div class="plansBlockProfile">
-
-            <div class="serviceBlock">
-              <table class="tableService sortable">
-                <thead>
-                <tr>
-                  <th th:text="#{lang.name}"></th>
-                  <th>Email</th>
-                  <th>password</th>
-                  <th th:text="#{lang.edit}"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="items: ${user}" class="highlight">
-                  <td th:text="${items.name}"></td>
-                  <td th:text="${items.email}"></td>
-                  <td> ****</td>
-                  <form action="/userPage/userProfile/edit" method="post">
-                    <td>
-                      <button type="submit" onclick="return confirm('editPersonConfirm')" th:text="#{lang.edit}"></button>
-                    </td>
-                  </form>
-                </tr>
-                </tbody>
-              </table>
-              <p th:if="${wrongData}" th:text="#{lang.incorrectEmailOrPass}"></p>
+            <p id="pageLogo" th:text="#{lang.myLibrary}"></p>
+            <div class="adminmenu">
+                <ul>
+                    <li><a class="scroll-animite btn"
+                           href="/userPage" th:text="#{lang.personPage}"></a>
+                    </li>
+                    <li><a class="scroll-animite logOutBtn"
+                           href="/logout" th:text="#{lang.logout}"></a></li>
+                </ul>
             </div>
-              <div class="serviceBlock"  th:if="${tab}">
-                <p th:text="#{lang.edit}"></p>
-                <form method="post" th:object="${userForm}" action="/userPage/userProfile/update">
-                <p>
-                  <label>
-                    <input class="tariff1" th:field="*{name}" th:placeholder="#{lang.name}">
-                  </label>
-                </p>
-                <p>
-                  <label>
-                    <input class="tariff1" th:field="*{email}" required placeholder="Email">
-                  </label>
-                </p>
-                <p>
-                  <label>
-                    <input class="tariff1" th:field="*{oldPassword}" th:placeholder="#{lang.oldPassword}">
-                  </label>
-                </p>
-
-                  <p>
-                  <label>
-                    <input class="tariff1" th:field="*{newPassword}" th:placeholder="#{lang.newPassword}">
-                  </label>
-                </p>
-                  <button type="submit" onclick="return confirm('updateProfile')" th:text="#{lang.update}"></button>
-                </form>
-              </div>
-          </div>
         </div>
-      </div>
+
+        <div id="time"><span id="datetime"></span></div>
+    </header>
+    <!-- Slider area Start -->
+    <div class="slider-area">
+        <div class="slider-bg text-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="slidertext">
+                            <h1 th:text="#{lang.myProfile}"></h1>
+                        </div>
+                    </div>
+                    <div class="plansBlockProfile">
+
+                        <div class="serviceBlock">
+                            <table class="tableService sortable">
+                                <thead>
+                                <tr>
+                                    <th th:text="#{lang.name}"></th>
+                                    <th>Email</th>
+                                    <th>password</th>
+                                    <th th:text="#{lang.edit}"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="items: ${user}" class="highlight">
+                                    <td th:text="${items.name}"></td>
+                                    <td th:text="${items.email}"></td>
+                                    <td> ****</td>
+                                    <form action="/userPage/userProfile/edit" method="post">
+                                        <td>
+                                            <button type="submit" onclick="return confirm('editPersonConfirm')"
+                                                    th:text="#{lang.edit}"></button>
+                                        </td>
+                                    </form>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="validationError">
+                            <p th:if="${incorrect}" th:text="#{lang.incorrectData}"></p>
+                            </div>
+                        </div>
+                        <div class="serviceBlock" th:if="${tab}">
+                            <p th:text="#{lang.edit}"></p>
+                            <form method="post" th:object="${userForm}" action="/userPage/userProfile/update">
+                                <p>
+                                    <label>
+                                        <input class="tariff1" th:field="*{name}" th:placeholder="#{lang.name}">
+                                    </label>
+                                </p>
+                                <p>
+                                    <label>
+                                        <input class="tariff1" th:field="*{email}" required placeholder="Email">
+                                    </label>
+                                </p>
+                                <p>
+                                    <label>
+                                        <input class="tariff1" th:field="*{oldPassword}"
+                                               th:placeholder="#{lang.oldPassword}">
+                                    </label>
+                                </p>
+
+                                <p>
+                                    <label>
+                                        <input class="tariff1" th:field="*{newPassword}"
+                                               th:placeholder="#{lang.newPassword}">
+                                    </label>
+                                </p>
+                                <button type="submit" onclick="return confirm('updateProfile')"
+                                        th:text="#{lang.update}"></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 </body>
 </html>

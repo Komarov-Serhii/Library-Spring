@@ -129,11 +129,16 @@ button.btn.btn-link {
     color: #000
 }
 
+.validationError {
+    color: red;
+}
+
 a:focus,
 button:focus {
     text-decoration: none;
     outline: none;
 }
+
 
 button:focus,
 input:focus,

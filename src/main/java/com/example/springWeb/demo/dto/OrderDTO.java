@@ -1,13 +1,19 @@
 package com.example.springWeb.demo.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderDTO {
-    private long id_user;
-    private String name_user;
+    private long userId;
+    private String userName;
     private String email;
-    private long id_book;
-    private String name_book;
+    private long bookId;
+    private String bookName;
     private String author;
 }

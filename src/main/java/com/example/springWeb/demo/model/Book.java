@@ -1,18 +1,18 @@
 package com.example.springWeb.demo.model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
 import javax.persistence.*;
-import java.sql.Date;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 public class Book {
-
-    public Book() {
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

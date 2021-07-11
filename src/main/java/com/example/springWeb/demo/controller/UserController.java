@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -141,9 +142,9 @@ public class UserController {
     @GetMapping("/userProfile")
     public String userProfile(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long id_user = ((User) principal).getId();
+        Long userId = ((User) principal).getId();
 
-        UserForProfileDTO userForProfileDTO = userService.infoForProfile(id_user);
+        UserForProfileDTO userForProfileDTO = userService.infoForProfile(userId);
         model.addAttribute("user", userForProfileDTO);
         return "user/userProfile";
     }
@@ -162,16 +163,25 @@ public class UserController {
         return "user/userProfile";
     }
 
+
     @PostMapping("/userProfile/update")
-    public String update(@ModelAttribute("userForm") @Valid UserForProfileDTO userForm, Model model) {
+    public String update(@ModelAttribute("userForm") @Valid UserForProfileDTO userForm, BindingResult bindingResult, Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long id_user = ((User) principal).getId();
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("incorrect", true);
+
+            UserForProfileDTO userForProfileDTO = userService.infoForProfile(id_user);
+            model.addAttribute("user", userForProfileDTO);
+            return "user/userProfile";
+        }
 
         if (!userService.editProfile(id_user, userForm)) {
             model.addAttribute("wrongData", true);
         }
 
-        logger.info(userForm);
+
         UserForProfileDTO userForProfileDTO = userService.infoForProfile(id_user);
         model.addAttribute("user", userForProfileDTO);
         return "user/userProfile";

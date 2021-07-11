@@ -58,24 +58,24 @@
               </thead>
               <tbody>
               <tr th:each="ord: ${order}" class="highlight">
-                <td th:text="${ord.id_user}"></td>
-                <td th:text="${ord.name_user}"></td>
+                <td th:text="${ord.getUserId}"></td>
+                <td th:text="${ord.getUserName}"></td>
                 <td th:text="${ord.email}"></td>
-                <td th:text="${ord.id_book}"></td>
-                <td th:text="${ord.name_book}"></td>
+                <td th:text="${ord.getBookId}"></td>
+                <td th:text="${ord.getBookName}"></td>
                 <td th:text="${ord.author}"></td>
                 <form action="/mainAdmin/order/accept" method="post">
                   <td>
                     <button type="submit" onclick="return confirm('acceptConfirm')" th:text="#{lang.accept}" ></button>
-                    <input type="hidden" name="id" value="id" th:attr="value=${ord.id_user}"/>
-                    <input type="hidden" name="id_book" value="id_book" th:attr="value=${ord.id_book}"/>
+                    <input type="hidden" name="id" value="id" th:attr="value=${ord.getUserId}"/>
+                    <input type="hidden" name="id_book" value="id_book" th:attr="value=${ord.getBookId}"/>
                   </td>
                 </form>
                 <form action="/mainAdmin/order/reject" method="post">
                   <td>
                   <button type="submit" onclick="return confirm('rejectConfirm')" th:text="#{lang.reject}"></button>
-                  <input type="hidden" name="id" value="id" th:attr="value=${ord.id_user}"/>
-                  <input type="hidden" name="id_book" value="id_book" th:attr="value=${ord.id_book}"/>
+                  <input type="hidden" name="id" value="id" th:attr="value=${ord.getUserId}"/>
+                  <input type="hidden" name="id_book" value="id_book" th:attr="value=${ord.getBookId}"/>
                   </td>
                 </form>
                 </tr>

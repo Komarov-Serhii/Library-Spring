@@ -1,10 +1,16 @@
 package com.example.springWeb.demo.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Date;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name="t_order")
@@ -27,7 +33,4 @@ public class Order {
     @Column(name="return_date")
     private Date date;
     private int debt;
-
-    public Order() {
-    }
 }

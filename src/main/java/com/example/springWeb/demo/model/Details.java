@@ -1,13 +1,18 @@
 package com.example.springWeb.demo.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
+@Entity
 public class Details {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +26,4 @@ public class Details {
     private int price;
     private String genre;
 
-
-    public Details() {
-
-    }
 }

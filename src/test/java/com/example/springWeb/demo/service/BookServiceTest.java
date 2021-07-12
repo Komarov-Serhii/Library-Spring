@@ -162,7 +162,7 @@ public class BookServiceTest {
                 .builder()
                 .id(id)
                 .active(active)
-                .username(email)
+                .email(email)
                 .name(name)
                 .password(password)
                 .build();

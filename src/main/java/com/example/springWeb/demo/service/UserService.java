@@ -43,7 +43,7 @@ public class UserService implements UserDetailsService {
 
 
     public boolean saveUser(User user) {
-        User userFromDB = userRepository.findByUsername(user.getUsername());
+        User userFromDB = userRepository.findByEmail(user.getEmail());
 
         if (userFromDB != null) {
             return false;
@@ -80,8 +80,8 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
@@ -196,7 +196,7 @@ public class UserService implements UserDetailsService {
 
 
         user.setName(userForm.getName());
-        user.setUsername(userForm.getEmail());
+        user.setEmail(userForm.getEmail());
 
         if (passwordVerify(user, userForm.getOldPassword())) {
             user.setPassword(bCryptPasswordEncoder.encode(userForm.getNewPassword()));

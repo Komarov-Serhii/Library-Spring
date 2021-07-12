@@ -35,14 +35,14 @@
                         <p>
                             <label>
                                 <input class="profileEditorFields loginField" type="text" required placeholder="Login"
-                                       th:field="*{username}" autofocus="true">
+                                       th:field="*{email}" autofocus="true">
                             </label>
                         </p>
 
                         <div>
                             <span class="validationError"
-                                  th:if="${#fields.hasErrors('username')}"
-                                  th:errors="*{username}"></span>
+                                  th:if="${#fields.hasErrors('email')}"
+                                  th:errors="*{email}"></span>
                         </div>
 
                         <p>

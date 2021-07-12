@@ -29,7 +29,7 @@ public class  User implements UserDetails {
     @Pattern(regexp = "^(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;" +
             ":\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\." +
             "[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$", message = "{lang.incorrectEmail}")
-    private String username;
+    private String email;
     private String name;
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$", message = "{lang.incorrectPass}")
     private String password;
@@ -54,13 +54,8 @@ public class  User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
 
     @Override
     public boolean isAccountNonExpired() {

@@ -92,7 +92,7 @@
                                     <td th:text="${items.price}"></td>
                                     <form action="/userPage/order" method="post">
                                     <td>
-                                        <button type="submit" onclick="return confirm('orderBookConfirm')" th:text="#{lang.order}"></button>
+                                        <button type="submit" th:onclick="'return confirm(\'' + #{lang.orderBookConfirm} + '\');'"  th:text="#{lang.order}"></button>
                                         <input type="hidden" name="id" value="id" th:attr="value=${items.id}"/>
                                     </td>
                                     </form>
@@ -148,7 +148,7 @@
                                     <td th:text="${book.price}"></td>
                                     <form action="/userPage/order" method="post">
                                     <td>
-                                        <button type="submit" onclick="return confirm('orderBookConfirm')" th:text="#{lang.order}"></button>
+                                        <button type="submit" th:onclick="'return confirm(\'' + #{lang.orderBookConfirm} + '\');'" th:text="#{lang.order}"></button>
                                         <input type="hidden" name="id" value="id" th:attr="value=${book.id}"/>
                                     </td>
                                     </form>

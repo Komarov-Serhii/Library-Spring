@@ -90,14 +90,14 @@
                   <td th:text="${items.email}"></td>
                   <form action="/mainAdmin/listUser/block" method="post">
                     <td th:if="${items.active == true}">
-                      <button type="submit" onclick="return confirm('blockPersonConfirm')" th:text="#{lang.block}"></button>
+                      <button type="submit" th:onclick="'return confirm(\'' + #{lang.blockPersonConfirm} + '\');'" th:text="#{lang.block}"></button>
                       <input type="hidden" name="id" value="id" th:attr="value=${items.id}"/>
                       <input type="hidden" name="active" value="active" th:attr="value=${items.active}"/>
                     </td>
                   </form>
                   <form action="/mainAdmin/listUser/block" method="post">
                     <td th:if="${items.active == false}">
-                      <button type="submit" onclick="return confirm('blockPersonConfirm')" th:text="#{lang.unblock}"></button>
+                      <button type="submit" th:onclick="'return confirm(\'' + #{lang.unblockPersonConfirm} + '\');'" th:text="#{lang.unblock}"></button>
                       <input type="hidden" name="id" value="id" th:attr="value=${items.id}"/>
                       <input type="hidden" name="active" value="active" th:attr="value=${items.active}"/>
                     </td>

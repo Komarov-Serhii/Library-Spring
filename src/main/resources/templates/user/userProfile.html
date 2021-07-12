@@ -63,7 +63,7 @@
                                     <td> ****</td>
                                     <form action="/userPage/userProfile/edit" method="post">
                                         <td>
-                                            <button type="submit" onclick="return confirm('editPersonConfirm')"
+                                            <button type="submit" th:onclick="'return confirm(\'' + #{lang.editPersonConfirm} + '\');'"
                                                     th:text="#{lang.edit}"></button>
                                         </td>
                                     </form>

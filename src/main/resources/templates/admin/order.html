@@ -66,14 +66,14 @@
                 <td th:text="${ord.author}"></td>
                 <form action="/mainAdmin/order/accept" method="post">
                   <td>
-                    <button type="submit" onclick="return confirm('acceptConfirm')" th:text="#{lang.accept}" ></button>
+                    <button type="submit" th:onclick="'return confirm(\'' + #{lang.acceptConfirm} + '\');'" th:text="#{lang.accept}" ></button>
                     <input type="hidden" name="id" value="id" th:attr="value=${ord.getUserId}"/>
                     <input type="hidden" name="id_book" value="id_book" th:attr="value=${ord.getBookId}"/>
                   </td>
                 </form>
                 <form action="/mainAdmin/order/reject" method="post">
                   <td>
-                  <button type="submit" onclick="return confirm('rejectConfirm')" th:text="#{lang.reject}"></button>
+                  <button type="submit" th:onclick="'return confirm(\'' + #{lang.rejectConfirm} + '\');'" th:text="#{lang.reject}"></button>
                   <input type="hidden" name="id" value="id" th:attr="value=${ord.getUserId}"/>
                   <input type="hidden" name="id_book" value="id_book" th:attr="value=${ord.getBookId}"/>
                   </td>

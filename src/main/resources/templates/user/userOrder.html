@@ -69,7 +69,7 @@
                   <td th:text="${order.price}"></td>
                   <form action="/userPage/userOrder/decline" method="post">
                     <td>
-                      <button type="submit" onclick="return confirm('declineOrderConfirm')" th:text="#{lang.decline}"></button>
+                      <button type="submit" th:onclick="'return confirm(\'' + #{lang.declineOrderConfirm} + '\');'" th:text="#{lang.decline}"></button>
                       <input type="hidden" name="id" value="id" th:attr="value=${order.id}"/>
                     </td>
                   </form>
